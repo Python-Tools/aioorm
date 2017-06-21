@@ -15,12 +15,11 @@ LICENSE = 'Mozilla'
 CLASSIFIERS = [
     'Development Status :: 3 - Alpha',
     'Intended Audience :: Developers',
-    'License :: OSI Approved :: Mozilla License',
     'Programming Language :: Python :: 3.5',
     'Programming Language :: Python :: 3.6',
     'Topic :: Documentation :: Sphinx',
 ]
-KEYWORDS = [['orm', 'asyncio', 'peewee']]
+KEYWORDS = ['orm', 'asyncio', 'peewee']
 PACKAGES = find_packages(exclude=['contrib', 'docs', 'test'])
 ZIP_SAFE = False
 
@@ -55,7 +54,7 @@ setup(
         'dev': REQUIREMETS_DEV,
         'test': REQUIREMETS_TEST
     },
-    
+
     zip_safe=ZIP_SAFE,
     data_files=[('requirements', ['requirements/requirements.txt', 'requirements/requirements_dev.txt', 'requirements/requirements_test.txt'])]
 )
