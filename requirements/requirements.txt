@@ -1,0 +1,6 @@
+
+peewee
+aiopg
+aiomysql
+aitertools
+aiofiles
