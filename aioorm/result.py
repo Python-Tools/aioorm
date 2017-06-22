@@ -2,8 +2,7 @@ from peewee import QueryResultWrapper, ExtQueryResultWrapper
 from peewee import TuplesQueryResultWrapper, DictQueryResultWrapper
 from peewee import ModelQueryResultWrapper, AggregateQueryResultWrapper
 from peewee import NaiveQueryResultWrapper
-
-
+from aitertools import aiter
 class AioResultIterator(object):
 
     def __init__(self, qrw):
@@ -26,6 +25,7 @@ class AioResultIterator(object):
 class AioQueryResultWrapper(QueryResultWrapper):
 
     async def __aiter__(self):
+    #def __aiter__(self):
         if self._populated:
             return iter(self._result_cache)
         else:
@@ -108,6 +108,12 @@ class AioQueryResultWrapper(QueryResultWrapper):
 class AioExtQueryResultWrapper(AioQueryResultWrapper,
                                ExtQueryResultWrapper):
     pass
+    #async def iterator(self):
+    #    print("123")
+    #    return aiter(self)
+        #raise NotImplementedError()
+        # while True:
+        #     yield self.iterate()
 
 
 class AioTuplesQueryResultWrapper(AioExtQueryResultWrapper,

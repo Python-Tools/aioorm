@@ -7,7 +7,6 @@ from peewee import Func
 from peewee import Field
 
 class csv_writer:
-
     def __init__(self,fh,fieldnames=None,delimiter=','):
         self.fh = fh
         self.delimiter = delimiter
@@ -19,8 +18,6 @@ class csv_writer:
     async def writerow(self,row):
         if isinstance(row,Collection):
             row = (self.delimiter).join([str(i) for i in row])
-
-
         elif isinstance(row,Mapping):
             if not self.fieldnames:
                 raise AttributeError("do not have header")
@@ -31,8 +28,11 @@ class csv_writer:
             raise AttributeError("unsupport row type")
         try:
             await self.fh.write(row+os.linesep)
-        except Exception as e:
-            self.fh.write(row+os.linesep)
+        except TypeError as te:
+            #self.fh.write(row+os.linesep)
+            pass
+        except:
+            raise
 
     async def writeheader(self,fieldnames=None):
         if fieldnames:
@@ -41,20 +41,31 @@ class csv_writer:
             row = (self.delimiter).join(self.fieldnames)
             try:
                 await self.fh.write(row+os.linesep)
-            except Exception as e:
-                self.fh.write(row+os.linesep)
+            except TypeError as te:
+                #self.fh.write(row+os.linesep)
+                pass
+            except:
+                raise
 
 
-async def aiodump_csv(query, file_or_name, loop= None,include_header=True, close_file=True,
+async def aiodump_csv(query, file_or_name, loop= None,include_header=True, close_file=False,
              append=True, csv_writer=csv_writer):
 
     if isinstance(file_or_name, str):
-        fh = await aiofiles.open(file_or_name, append and 'a' or 'w')
+        close_file=True
+        #fh = await aiofiles.open(file_or_name, append and 'a' or 'w')
+        fh = await aiofiles.open(file_or_name, 'w')
         writer = csv_writer(fh)
     else:
         fh = file_or_name
         if append:
-            await fh.seek(0, 2)
+            try:
+                await fh.seek(0, 2)
+            except TypeError as te:
+                fh.seek(0, 2)
+            except:
+                raise
+
         writer = csv_writer(fh)
 
     if include_header:
@@ -69,10 +80,13 @@ async def aiodump_csv(query, file_or_name, loop= None,include_header=True, close
         await writer.writeheader(header)
 
     for row in (await query.tuples()):
-
         await writer.writerow(row)
-
     if close_file:
-        await fh.close()
+        try:
+            await fh.close()
+        except TypeError as te:
+            fh.close()
+        except:
+            raise
 
     return fh

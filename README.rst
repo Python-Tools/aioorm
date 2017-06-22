@@ -23,7 +23,7 @@ Feature
 * use peewee's fields
 * ManyToManyField support
 * Shortcuts support
-* csv dump support
+* csv dump /load support
 
 Install
 --------------------------------
@@ -170,7 +170,6 @@ Documentation
 
 TODO
 -----------------------------------
-* async csv loader
 * async dataset support
 * more test
 
