@@ -19,22 +19,30 @@ class csv_writer:
     async def writerow(self,row):
         if isinstance(row,Collection):
             row = (self.delimiter).join([str(i) for i in row])
-            await self.fh.write(row+os.linesep)
 
-        if isinstance(row,Mapping):
+
+        elif isinstance(row,Mapping):
             if not self.fieldnames:
                 raise AttributeError("do not have header")
             else:
                 row_ = [row.get(i,"") for i in self.fieldnames]
                 row = (self.delimiter).join(row_)
-                await self.fh.write(row+os.linesep)
+        else:
+            raise AttributeError("unsupport row type")
+        try:
+            await self.fh.write(row+os.linesep)
+        except Exception as e:
+            self.fh.write(row+os.linesep)
 
     async def writeheader(self,fieldnames=None):
         if fieldnames:
             self.fieldnames = list(fieldnames)
         if self.fieldnames:
             row = (self.delimiter).join(self.fieldnames)
-            await self.fh.write(row+os.linesep)
+            try:
+                await self.fh.write(row+os.linesep)
+            except Exception as e:
+                self.fh.write(row+os.linesep)
 
 
 async def aiodump_csv(query, file_or_name, loop= None,include_header=True, close_file=True,
