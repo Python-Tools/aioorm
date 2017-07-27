@@ -90,4 +90,4 @@ class AioMySQLDatabase(AioDatabase, MySQLDatabase):
 
     # TODO
     def get_binary_type(self):
-        return mysql.Binary
+        return aiomysql.Binary

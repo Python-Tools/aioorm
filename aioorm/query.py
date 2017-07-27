@@ -2,7 +2,12 @@ from peewee import Query, RawQuery, SelectQuery, NoopSelectQuery
 from peewee import CompoundSelect, DeleteQuery, UpdateQuery, InsertQuery
 from peewee import _WriteQuery
 
-
+RESULTS_NAIVE = 1
+RESULTS_MODELS = 2
+RESULTS_TUPLES = 3
+RESULTS_DICTS = 4
+RESULTS_AGGREGATE_MODELS = 5
+RESULTS_NAMEDTUPLES = 6
 class AioQuery(Query):
 
     async def execute(self):
