@@ -92,5 +92,5 @@ class AioPostgreSQLDatabase(AioDatabase, PostgresqlExtDatabase):
 
 
     # TODO
-    # def get_binary_type(self):
-    #     return mysql.Binary
+    def get_binary_type(self):
+        return psycopg2.Binary

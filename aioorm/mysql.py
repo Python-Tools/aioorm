@@ -1,4 +1,5 @@
 import aiomysql
+import pymysql
 from peewee import MySQLDatabase
 from .context import _aio_atomic, aio_transaction, aio_savepoint
 from .database import AioDatabase
@@ -90,4 +91,4 @@ class AioMySQLDatabase(AioDatabase, MySQLDatabase):
 
     # TODO
     def get_binary_type(self):
-        return aiomysql.Binary
+        return pymysql.Binary
