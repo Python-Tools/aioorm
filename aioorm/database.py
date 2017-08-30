@@ -31,6 +31,9 @@ class AioDatabase(Database):
         self.op_overrides = merge_dict(self.op_overrides, ops or {})
         self.exception_wrapper = ExceptionWrapper(self.exceptions)
 
+        # 用于保持连接
+        self._auto_task = None
+
     def is_closed(self):
          return self._closed
 
@@ -64,6 +67,7 @@ class AioDatabase(Database):
             raise OperationalError('Connection already open')
         self._conn_pool = await self._create_connection(loop=loop)
         self._closed = False
+
         with self.exception_wrapper:
             self.initialize_connection(self._conn_pool)
 
@@ -106,8 +110,9 @@ class AioDatabase(Database):
         else:
             return AioNaiveQueryResultWrapper
 
-    async def cancel(self,timeout=None):
+    async def cancel(self, timeout=None):
         raise NotImplementedError
+
     def set_autocommit(self, autocommit):
         raise NotImplementedError
 

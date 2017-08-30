@@ -7,6 +7,48 @@ from .database import AioDatabase
 
 class AioMySQLDatabase(AioDatabase, MySQLDatabase):
 
+    async def close(self):
+        if self.deferred:
+            raise Exception('Error, database not properly initialized '
+                            'before closing connection')
+        with self.exception_wrapper:
+            if not self._closed and self._conn_pool:
+                #关闭的时候先关闭自动链接
+                await self.close_engine()
+                self._conn_pool.close()
+                self._closed = True
+                await self._conn_pool.wait_closed()
+
+    async def connect(self, loop=None):
+        if self.deferred:
+            raise OperationalError('Database has not been initialized')
+        if not self._closed:
+            raise OperationalError('Connection already open')
+        self._conn_pool = await self._create_connection(loop=loop)
+        self._closed = False
+        # 启动自动链接
+        await self.init_engine(loop=loop)
+
+        with self.exception_wrapper:
+            self.initialize_connection(self._conn_pool)
+
+    async def init_engine(self, loop=None):
+        # create engine
+  
+        self._auto_task = loop.create_task(keep_engine())
+
+    async def close_engine(self):
+        self._auto_task.cancel()
+
+        # close engine
+
+    async def keep_engine(self):
+        while True:
+            async with self._conn_pool.engine.acquire() as conn:
+                await conn.connection.ping()
+
+            await asyncio.sleep(60)
+
     def set_autocommit(self, autocommit):
         self.autocommit = autocommit
 
