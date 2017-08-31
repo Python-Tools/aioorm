@@ -1,4 +1,5 @@
 import aiomysql
+import asyncio
 import pymysql
 from peewee import MySQLDatabase
 from .context import _aio_atomic, aio_transaction, aio_savepoint
@@ -35,7 +36,7 @@ class AioMySQLDatabase(AioDatabase, MySQLDatabase):
     async def init_engine(self, loop=None):
         # create engine
   
-        self._auto_task = loop.create_task(keep_engine())
+        self._auto_task = loop.create_task(self.keep_engine())
 
     async def close_engine(self):
         self._auto_task.cancel()
