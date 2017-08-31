@@ -218,7 +218,7 @@ User	../test/test_shortcuts.py	/^class User(AioModel):$/;"	kind:class	line:9
 User_csv	../test/test_scv.py	/^class User_csv(AioModel):$/;"	kind:class	line:31
 User_csv_f	../test/test_scv.py	/^class User_csv_f(AioModel):$/;"	kind:class	line:19
 Using	../aioorm/context.py	/^from peewee import ExecutionContext, Using, _atomic, transaction, savepoint$/;"	kind:namespace	line:1
-VERSION	../setup.py	/^VERSION = '0.0.6'$/;"	kind:variable	line:9
+VERSION	../setup.py	/^VERSION = '0.0.7'$/;"	kind:variable	line:9
 Writer	../env/bin/rst2odt.py	/^from docutils.writers.odf_odt import Writer, Reader$/;"	kind:namespace	line:19
 ZIP_SAFE	../setup.py	/^ZIP_SAFE = False$/;"	kind:variable	line:24
 _AioWriteQuery	../aioorm/query.py	/^class _AioWriteQuery(AioQuery, _WriteQuery):$/;"	kind:class	line:172
@@ -284,11 +284,11 @@ _atomic	../aioorm/context.py	/^from peewee import ExecutionContext, Using, _atom
 _begin	../aioorm/context.py	/^    async def _begin(self):$/;"	kind:member	line:115
 _begin	../aioorm/context.py	/^    async def _begin(self):$/;"	kind:member	line:72
 _clone_set	../aioorm/shortcuts.py	/^from playhouse.shortcuts import _clone_set$/;"	kind:namespace	line:3
-_close	../aioorm/database.py	/^    async def _close(self, conn):$/;"	kind:member	line:50
+_close	../aioorm/database.py	/^    async def _close(self, conn):$/;"	kind:member	line:52
 _close	../aioorm/postgresql.py	/^    async def _close(self, conn):$/;"	kind:member	line:21
-_connect	../aioorm/mysql.py	/^    async def _connect(self, database, loop=None, **kwargs):$/;"	kind:member	line:81
+_connect	../aioorm/mysql.py	/^    async def _connect(self, database, loop=None, **kwargs):$/;"	kind:member	line:82
 _connect	../aioorm/postgresql.py	/^    async def _connect(self, database, loop=None, **kwargs):$/;"	kind:member	line:11
-_create_connection	../aioorm/database.py	/^    async def _create_connection(self, loop=None):$/;"	kind:member	line:74
+_create_connection	../aioorm/database.py	/^    async def _create_connection(self, loop=None):$/;"	kind:member	line:79
 _create_indexes	../aioorm/model.py	/^    async def _create_indexes(cls):$/;"	kind:member	line:128
 _csv	../aioorm/utils/csv_utils/csv_loader.py	/^import _csv$/;"	kind:namespace	line:6
 _drop_indexes	../aioorm/model.py	/^    async def _drop_indexes(cls, safe=False):$/;"	kind:member	line:133
@@ -353,8 +353,8 @@ asyncio	../test/test_manytomany.py	/^import asyncio$/;"	kind:namespace	line:8
 asyncio	../test/test_model.py	/^import asyncio$/;"	kind:namespace	line:10
 asyncio	../test/test_scv.py	/^import asyncio$/;"	kind:namespace	line:2
 asyncio	../test/test_shortcuts.py	/^import asyncio$/;"	kind:namespace	line:3
-atomic	../aioorm/database.py	/^    def atomic(self, transaction_type=None):$/;"	kind:member	line:128
-atomic	../aioorm/mysql.py	/^    def atomic(self, transaction_type=None):$/;"	kind:member	line:70
+atomic	../aioorm/database.py	/^    def atomic(self, transaction_type=None):$/;"	kind:member	line:133
+atomic	../aioorm/mysql.py	/^    def atomic(self, transaction_type=None):$/;"	kind:member	line:71
 author	../apidoc/conf.py	/^author = 'hsz'$/;"	kind:variable	line:28
 author	../setup.py	/^    author=AUTHOR,$/;"	kind:variable	line:45
 author_email	../setup.py	/^    author_email=AUTHOR_EMAIL,$/;"	kind:variable	line:46
@@ -362,7 +362,7 @@ basestring	../aioorm/database.py	/^from peewee import Database, ExceptionWrapper
 basestring	../aioorm/postgresql.py	/^from peewee import basestring$/;"	kind:namespace	line:3
 c	../test/test_scv.py	/^c = count()$/;"	kind:variable	line:17
 callback	../aioorm/fields.py	/^            def callback(through_model):$/;"	kind:function	line:17
-cancel	../aioorm/database.py	/^    async def cancel(self, timeout=None):$/;"	kind:member	line:113
+cancel	../aioorm/database.py	/^    async def cancel(self, timeout=None):$/;"	kind:member	line:118
 cancel	../aioorm/postgresql.py	/^    async def cancel(self,con,timeout=None):$/;"	kind:member	line:24
 chardetect	../env/bin/chardetect	1;"	kind:file	line:1
 check_netloc	../aioorm/uri_parser.py	/^def check_netloc(parse_result:ParseResult,scheme:str)->Tuple[Optional[str],Optional[str],Optional[str],Optional[str]]:$/;"	kind:function	line:42
@@ -372,9 +372,9 @@ check_scheme	../aioorm/uri_parser.py	/^def check_scheme(scheme:Optional[str])->s
 classifiers	../setup.py	/^    classifiers=CLASSIFIERS,$/;"	kind:variable	line:48
 clean_field_name	../aioorm/utils/csv_utils/csv_loader.py	/^    def clean_field_name(self, s):$/;"	kind:member	line:237
 clear	../aioorm/fields.py	/^    async def clear(self):$/;"	kind:member	line:139
-close	../aioorm/database.py	/^    async def close(self):$/;"	kind:member	line:53
+close	../aioorm/database.py	/^    async def close(self):$/;"	kind:member	line:55
 close	../aioorm/mysql.py	/^    async def close(self):$/;"	kind:member	line:11
-close_engine	../aioorm/mysql.py	/^    async def close_engine(self):$/;"	kind:member	line:41
+close_engine	../aioorm/mysql.py	/^    async def close_engine(self):$/;"	kind:member	line:42
 cm2html	../env/bin/cm2html	/^from recommonmark.scripts import cm2html$/;"	kind:namespace	line:7
 cm2html	../env/bin/cm2html	1;"	kind:file	line:1
 cm2latex	../env/bin/cm2latex	/^from recommonmark.scripts import cm2latex$/;"	kind:namespace	line:7
@@ -392,15 +392,15 @@ cmd_line	../env/bin/pwiz.py	/^        cmd_line = ' '.join(raw_argv[1:])$/;"	kind
 collections	../env/lib/mypy/typeshed/tests/pytype_test.py	/^import collections$/;"	kind:namespace	line:15
 commit	../aioorm/context.py	/^    async def commit(self, begin:bool=True):$/;"	kind:member	line:78
 commit	../aioorm/context.py	/^    async def commit(self, begin=True):$/;"	kind:member	line:118
-commit	../aioorm/database.py	/^    async def commit(self):$/;"	kind:member	line:131
-commit	../aioorm/mysql.py	/^    async def commit(self):$/;"	kind:member	line:73
+commit	../aioorm/database.py	/^    async def commit(self):$/;"	kind:member	line:136
+commit	../aioorm/mysql.py	/^    async def commit(self):$/;"	kind:member	line:74
 commit	../aioorm/postgresql.py	/^    async def commit(self):$/;"	kind:member	line:87
-commit_on_success	../aioorm/mysql.py	/^    commit_on_success = property(transaction)$/;"	kind:variable	line:63
+commit_on_success	../aioorm/mysql.py	/^    commit_on_success = property(transaction)$/;"	kind:variable	line:64
 communicate	../env/lib/mypy/typeshed/tests/pytype_test.py	/^    def communicate(self):$/;"	kind:member	line:57
 compound_op	../aioorm/query.py	/^    def compound_op(operator):$/;"	kind:member	line:60
 conf.py	../apidoc/conf.py	1;"	kind:file	line:1
-connect	../aioorm/database.py	/^    async def connect(self, loop=None):$/;"	kind:member	line:63
-connect	../aioorm/mysql.py	/^    async def connect(self, loop=None):$/;"	kind:member	line:23
+connect	../aioorm/database.py	/^    async def connect(self, loop=None):$/;"	kind:member	line:67
+connect	../aioorm/mysql.py	/^    async def connect(self, loop=None):$/;"	kind:member	line:24
 connect	../env/bin/pwiz.py	/^    connect = get_connect_kwargs(options)$/;"	kind:variable	line:188
 content	../test/test_model.py	/^    content = TextField(default='')$/;"	kind:variable	line:41
 context.py	../aioorm/context.py	1;"	kind:file	line:1
@@ -415,13 +415,13 @@ coverage	../env/bin/coverage	1;"	kind:file	line:1
 coverage-3.6	../env/bin/coverage-3.6	1;"	kind:file	line:1
 coverage3	../env/bin/coverage3	1;"	kind:file	line:1
 create	../aioorm/model.py	/^    async def create(cls, **query):$/;"	kind:member	line:65
-create_foreign_key	../aioorm/database.py	/^    async def create_foreign_key(self, model_class, field, constraint=None):$/;"	kind:member	line:182
-create_index	../aioorm/database.py	/^    async def create_index(self, model_class, fields, unique=False):$/;"	kind:member	line:162
-create_model_tables	../aioorm/database.py	/^async def create_model_tables(models, **create_table_kwargs):$/;"	kind:function	line:234
-create_sequence	../aioorm/database.py	/^    async def create_sequence(self, seq):$/;"	kind:member	line:187
-create_table	../aioorm/database.py	/^    async def create_table(self, model_class, safe=False):$/;"	kind:member	line:155
+create_foreign_key	../aioorm/database.py	/^    async def create_foreign_key(self, model_class, field, constraint=None):$/;"	kind:member	line:187
+create_index	../aioorm/database.py	/^    async def create_index(self, model_class, fields, unique=False):$/;"	kind:member	line:167
+create_model_tables	../aioorm/database.py	/^async def create_model_tables(models, **create_table_kwargs):$/;"	kind:function	line:239
+create_sequence	../aioorm/database.py	/^    async def create_sequence(self, seq):$/;"	kind:member	line:192
+create_table	../aioorm/database.py	/^    async def create_table(self, model_class, safe=False):$/;"	kind:member	line:160
 create_table	../aioorm/model.py	/^    async def create_table(cls, fail_silently=False):$/;"	kind:member	line:114
-create_tables	../aioorm/database.py	/^    async def create_tables(self, models, safe=False):$/;"	kind:member	line:159
+create_tables	../aioorm/database.py	/^    async def create_tables(self, models, safe=False):$/;"	kind:member	line:164
 create_users	../test/test_model.py	/^    async def create_users(cls, n):$/;"	kind:member	line:34
 create_users_blogs	../test/test_model.py	/^async def create_users_blogs(n=10, nb=5):$/;"	kind:function	line:51
 create_users_notes	../test/test_manytomany.py	/^async def create_users_notes():$/;"	kind:function	line:29
@@ -468,7 +468,7 @@ default_description	../env/bin/rst2pseudoxml.py	/^from docutils.core import publ
 default_description	../env/bin/rst2s5.py	/^from docutils.core import publish_cmdline, default_description$/;"	kind:namespace	line:18
 default_description	../env/bin/rst2xml.py	/^from docutils.core import publish_cmdline, default_description$/;"	kind:namespace	line:17
 default_description	../env/bin/rstpep2html.py	/^from docutils.core import publish_cmdline, default_description$/;"	kind:namespace	line:18
-default_insert_clause	../aioorm/database.py	/^    def default_insert_clause(self, model_class):$/;"	kind:member	line:224
+default_insert_clause	../aioorm/database.py	/^    def default_insert_clause(self, model_class):$/;"	kind:member	line:229
 delete	../aioorm/model.py	/^    def delete(cls):$/;"	kind:member	line:57
 delete_instance	../aioorm/model.py	/^    async def delete_instance(self, recursive=False, delete_nullable=False):$/;"	kind:member	line:188
 description	../env/bin/rst2html.py	/^description = ('Generates (X)HTML documents from standalone reStructuredText '$/;"	kind:variable	line:20
@@ -485,12 +485,12 @@ description	../env/bin/rstpep2html.py	/^                description=description)
 description	../env/bin/rstpep2html.py	/^description = ('Generates (X)HTML from reStructuredText-format PEP files.  '$/;"	kind:variable	line:21
 description	../setup.py	/^    description=DESCRIPTION,$/;"	kind:variable	line:42
 dirpath	../env/lib/mypy/typeshed/tests/mypy_selftest.py	/^        dirpath = Path(tempdir)$/;"	kind:variable	line:13
-drop_index	../aioorm/database.py	/^    async def drop_index(self, model_class, fields, safe=False):$/;"	kind:member	line:172
-drop_model_tables	../aioorm/database.py	/^async def drop_model_tables(models, **drop_table_kwargs):$/;"	kind:function	line:239
-drop_sequence	../aioorm/database.py	/^    async def drop_sequence(self, seq):$/;"	kind:member	line:213
-drop_table	../aioorm/database.py	/^    async def drop_table(self, model_class, fail_silently=False, cascade=False):$/;"	kind:member	line:192
+drop_index	../aioorm/database.py	/^    async def drop_index(self, model_class, fields, safe=False):$/;"	kind:member	line:177
+drop_model_tables	../aioorm/database.py	/^async def drop_model_tables(models, **drop_table_kwargs):$/;"	kind:function	line:244
+drop_sequence	../aioorm/database.py	/^    async def drop_sequence(self, seq):$/;"	kind:member	line:218
+drop_table	../aioorm/database.py	/^    async def drop_table(self, model_class, fail_silently=False, cascade=False):$/;"	kind:member	line:197
 drop_table	../aioorm/model.py	/^    async def drop_table(cls, fail_silently=False, cascade=False):$/;"	kind:member	line:138
-drop_tables	../aioorm/database.py	/^    async def drop_tables(self, models, safe=False, cascade=False):$/;"	kind:member	line:199
+drop_tables	../aioorm/database.py	/^    async def drop_tables(self, models, safe=False, cascade=False):$/;"	kind:member	line:204
 engine	../env/bin/pskel	/^        engine=engine_mapping[options.engine],$/;"	kind:variable	line:93
 engine_mapping	../env/bin/pskel	/^engine_mapping = {$/;"	kind:variable	line:50
 epub_author	../apidoc/conf.py	/^epub_author = author$/;"	kind:variable	line:69
@@ -508,12 +508,12 @@ execute	../aioorm/query.py	/^    async def execute(self):$/;"	kind:member	line:1
 execute	../aioorm/query.py	/^    async def execute(self):$/;"	kind:member	line:217
 execute	../aioorm/query.py	/^    async def execute(self):$/;"	kind:member	line:252
 execute	../aioorm/query.py	/^    async def execute(self):$/;"	kind:member	line:46
-execute_sql	../aioorm/database.py	/^    async def execute_sql(self, sql, params=None, require_commit=True):$/;"	kind:member	line:79
+execute_sql	../aioorm/database.py	/^    async def execute_sql(self, sql, params=None, require_commit=True):$/;"	kind:member	line:84
 execute_sql	../aioorm/postgresql.py	/^    async def execute_sql(self, sql, params=None, require_commit=True):$/;"	kind:member	line:27
 exists	../aioorm/query.py	/^    async def exists(self):$/;"	kind:member	line:96
 expectedFailure	../test/test_db_factory.py	/^from unittest import TestCase,expectedFailure$/;"	kind:namespace	line:1
 extensions	../apidoc/conf.py	/^extensions = ['sphinx.ext.autodoc',$/;"	kind:variable	line:11
-extract_date	../aioorm/database.py	/^    def extract_date(self, date_part, date_field):$/;"	kind:member	line:218
+extract_date	../aioorm/database.py	/^    def extract_date(self, date_part, date_field):$/;"	kind:member	line:223
 extract_rows	../aioorm/utils/csv_utils/csv_loader.py	/^    async def extract_rows(self, file_or_name, **reader_kwargs):$/;"	kind:member	line:123
 extras_require	../setup.py	/^    extras_require={$/;"	kind:variable	line:53
 f	../env/bin/cmark.py	/^f = args.infile$/;"	kind:variable	line:14
@@ -525,37 +525,37 @@ find_packages	../setup.py	/^from setuptools import setup, find_packages$/;"	kind
 first	../aioorm/query.py	/^    async def first(self, n=1):$/;"	kind:member	line:118
 get	../aioorm/model.py	/^    async def get(cls, *query, **kwargs):$/;"	kind:member	line:72
 get	../aioorm/query.py	/^    async def get(self):$/;"	kind:member	line:101
-get_autocommit	../aioorm/database.py	/^    def get_autocommit(self):$/;"	kind:member	line:119
-get_autocommit	../aioorm/mysql.py	/^    def get_autocommit(self):$/;"	kind:member	line:56
-get_binary_type	../aioorm/database.py	/^    def get_binary_type(self):$/;"	kind:member	line:230
-get_binary_type	../aioorm/mysql.py	/^    def get_binary_type(self):$/;"	kind:member	line:136
+get_autocommit	../aioorm/database.py	/^    def get_autocommit(self):$/;"	kind:member	line:124
+get_autocommit	../aioorm/mysql.py	/^    def get_autocommit(self):$/;"	kind:member	line:57
+get_binary_type	../aioorm/database.py	/^    def get_binary_type(self):$/;"	kind:member	line:235
+get_binary_type	../aioorm/mysql.py	/^    def get_binary_type(self):$/;"	kind:member	line:137
 get_binary_type	../aioorm/postgresql.py	/^    def get_binary_type(self):$/;"	kind:member	line:95
 get_checks	../aioorm/utils/csv_utils/csv_loader.py	/^    def get_checks(self):$/;"	kind:member	line:152
-get_columns	../aioorm/database.py	/^    async def get_columns(self, table, schema=None):$/;"	kind:member	line:143
-get_columns	../aioorm/mysql.py	/^    async def get_columns(self, table, schema=None):$/;"	kind:member	line:107
+get_columns	../aioorm/database.py	/^    async def get_columns(self, table, schema=None):$/;"	kind:member	line:148
+get_columns	../aioorm/mysql.py	/^    async def get_columns(self, table, schema=None):$/;"	kind:member	line:108
 get_columns	../aioorm/postgresql.py	/^    async def get_columns(self, table, schema=None):$/;"	kind:member	line:59
-get_conn	../aioorm/database.py	/^    async def get_conn(self):$/;"	kind:member	line:40
+get_conn	../aioorm/database.py	/^    async def get_conn(self):$/;"	kind:member	line:41
 get_connect_kwargs	../env/bin/pwiz.py	/^def get_connect_kwargs(options):$/;"	kind:function	line:162
 get_converter	../aioorm/utils/csv_utils/csv_loader.py	/^    def get_converter(self):$/;"	kind:member	line:240
-get_cursor	../aioorm/database.py	/^    async def get_cursor(self):$/;"	kind:member	line:47
-get_foreign_keys	../aioorm/database.py	/^    async def get_foreign_keys(self, table, schema=None):$/;"	kind:member	line:149
-get_foreign_keys	../aioorm/mysql.py	/^    async def get_foreign_keys(self, table, schema=None):$/;"	kind:member	line:122
+get_cursor	../aioorm/database.py	/^    async def get_cursor(self):$/;"	kind:member	line:49
+get_foreign_keys	../aioorm/database.py	/^    async def get_foreign_keys(self, table, schema=None):$/;"	kind:member	line:154
+get_foreign_keys	../aioorm/mysql.py	/^    async def get_foreign_keys(self, table, schema=None):$/;"	kind:member	line:123
 get_foreign_keys	../aioorm/postgresql.py	/^    async def get_foreign_keys(self, table, schema=None):$/;"	kind:member	line:74
 get_import	../env/bin/pskel	/^    def get_import(self):$/;"	kind:member	line:45
-get_indexes	../aioorm/database.py	/^    async def get_indexes(self, table, schema=None):$/;"	kind:member	line:140
-get_indexes	../aioorm/mysql.py	/^    async def get_indexes(self, table, schema=None):$/;"	kind:member	line:95
+get_indexes	../aioorm/database.py	/^    async def get_indexes(self, table, schema=None):$/;"	kind:member	line:145
+get_indexes	../aioorm/mysql.py	/^    async def get_indexes(self, table, schema=None):$/;"	kind:member	line:96
 get_indexes	../aioorm/postgresql.py	/^    async def get_indexes(self, table, schema=None):$/;"	kind:member	line:47
 get_model_class	../aioorm/utils/csv_utils/csv_loader.py	/^    def get_model_class(self, field_names, fields):$/;"	kind:member	line:258
-get_noop_sql	../aioorm/database.py	/^    def get_noop_sql(self):$/;"	kind:member	line:227
+get_noop_sql	../aioorm/database.py	/^    def get_noop_sql(self):$/;"	kind:member	line:232
 get_option_parser	../env/bin/pwiz.py	/^def get_option_parser():$/;"	kind:function	line:140
 get_or_create	../aioorm/model.py	/^    async def get_or_create(cls, **kwargs):$/;"	kind:member	line:81
-get_primary_keys	../aioorm/database.py	/^    async def get_primary_keys(self, table, schema=None):$/;"	kind:member	line:146
-get_primary_keys	../aioorm/mysql.py	/^    async def get_primary_keys(self, table, schema=None):$/;"	kind:member	line:117
+get_primary_keys	../aioorm/database.py	/^    async def get_primary_keys(self, table, schema=None):$/;"	kind:member	line:151
+get_primary_keys	../aioorm/mysql.py	/^    async def get_primary_keys(self, table, schema=None):$/;"	kind:member	line:118
 get_primary_keys	../aioorm/postgresql.py	/^    async def get_primary_keys(self, table, schema=None):$/;"	kind:member	line:69
 get_reader	../aioorm/utils/csv_utils/csv_loader.py	/^    def get_reader(self, file_or_name, **reader_kwargs):$/;"	kind:member	line:59
-get_result_wrapper	../aioorm/database.py	/^    def get_result_wrapper(self, wrapper_type):$/;"	kind:member	line:99
-get_tables	../aioorm/database.py	/^    async def get_tables(self, schema=None):$/;"	kind:member	line:137
-get_tables	../aioorm/mysql.py	/^    async def get_tables(self, schema=None):$/;"	kind:member	line:91
+get_result_wrapper	../aioorm/database.py	/^    def get_result_wrapper(self, wrapper_type):$/;"	kind:member	line:104
+get_tables	../aioorm/database.py	/^    async def get_tables(self, schema=None):$/;"	kind:member	line:142
+get_tables	../aioorm/mysql.py	/^    async def get_tables(self, schema=None):$/;"	kind:member	line:92
 get_tables	../aioorm/postgresql.py	/^    async def get_tables(self, schema=None):$/;"	kind:member	line:43
 get_through_model	../aioorm/fields.py	/^    def get_through_model(self):$/;"	kind:member	line:40
 getpass	../aioorm/uri_parser.py	/^import getpass$/;"	kind:namespace	line:3
@@ -571,7 +571,7 @@ id	../test/test_scv.py	/^    id = PrimaryKeyField()$/;"	kind:variable	line:20
 in	../env/bin/rst2html5.py	/^    import locale # module missing in Jython$/;"	kind:namespace	line:24
 include_package_data	../setup.py	/^    include_package_data=True,$/;"	kind:variable	line:51
 indexes	../aioorm/fields.py	/^                indexes = ($/;"	kind:variable	line:48
-init_engine	../aioorm/mysql.py	/^    async def init_engine(self, loop=None):$/;"	kind:member	line:36
+init_engine	../aioorm/mysql.py	/^    async def init_engine(self, loop=None):$/;"	kind:member	line:37
 inner	../aioorm/context.py	/^        async def inner(*args, **kwargs):$/;"	kind:function	line:8
 inner	../aioorm/query.py	/^        def inner(self, other):$/;"	kind:function	line:61
 insert	../aioorm/model.py	/^    def insert(cls, __data=None, **insert):$/;"	kind:member	line:43
@@ -580,7 +580,7 @@ insert_many	../aioorm/model.py	/^    def insert_many(cls, rows, validate_fields=
 install	../env/lib/mypy/typeshed/tests/mypy_test.py	/^        print("Cannot import mypy. Did you install it?")$/;"	kind:namespace	line:83
 install_requires	../setup.py	/^    install_requires=REQUIREMETS,$/;"	kind:variable	line:52
 introspector	../env/bin/pwiz.py	/^    introspector = make_introspector(options.engine, database, **connect)$/;"	kind:variable	line:196
-is_closed	../aioorm/database.py	/^    def is_closed(self):$/;"	kind:member	line:37
+is_closed	../aioorm/database.py	/^    def is_closed(self):$/;"	kind:member	line:38
 is_date	../aioorm/utils/csv_utils/csv_loader.py	/^    def is_date(self, value):$/;"	kind:member	line:116
 is_datetime	../aioorm/utils/csv_utils/csv_loader.py	/^    def is_datetime(self, value):$/;"	kind:member	line:112
 is_float	../aioorm/utils/csv_utils/csv_loader.py	/^    def is_float(self, value):$/;"	kind:member	line:103
@@ -591,7 +591,7 @@ iterate	../aioorm/result.py	/^    async def iterate(self):$/;"	kind:member	line:
 iterate	../aioorm/result.py	/^    async def iterate(self):$/;"	kind:member	line:59
 iterator	../aioorm/query.py	/^    async def iterator(self):$/;"	kind:member	line:146
 iterator	../aioorm/result.py	/^    def iterator(self):$/;"	kind:member	line:77
-keep_engine	../aioorm/mysql.py	/^    async def keep_engine(self):$/;"	kind:member	line:46
+keep_engine	../aioorm/mysql.py	/^    async def keep_engine(self):$/;"	kind:member	line:47
 keywords	../setup.py	/^    keywords=KEYWORDS,$/;"	kind:variable	line:49
 language	../apidoc/conf.py	/^language = 'en'$/;"	kind:variable	line:34
 latex_documents	../apidoc/conf.py	/^latex_documents = [$/;"	kind:variable	line:52
@@ -761,8 +761,8 @@ renderer	../env/bin/cmark.py	/^    renderer = CommonMark.HTMLRenderer()$/;"	kind
 result.py	../aioorm/result.py	1;"	kind:file	line:1
 rollback	../aioorm/context.py	/^    async def rollback(self):$/;"	kind:member	line:122
 rollback	../aioorm/context.py	/^    async def rollback(self, begin=True):$/;"	kind:member	line:83
-rollback	../aioorm/database.py	/^    async def rollback(self):$/;"	kind:member	line:134
-rollback	../aioorm/mysql.py	/^    async def rollback(self):$/;"	kind:member	line:77
+rollback	../aioorm/database.py	/^    async def rollback(self):$/;"	kind:member	line:139
+rollback	../aioorm/mysql.py	/^    async def rollback(self):$/;"	kind:member	line:78
 rollback	../aioorm/postgresql.py	/^    async def rollback(self):$/;"	kind:member	line:90
 rst2html.py	../env/bin/rst2html.py	1;"	kind:file	line:1
 rst2html5.py	../env/bin/rst2html5.py	1;"	kind:file	line:1
@@ -780,12 +780,12 @@ s	../test/test_scv.py	/^        s = (os.linesep).join([str(i) for i in user0]).s
 s	../test/test_scv.py	/^    s = (os.linesep).join([str(i) for i in user0]).strip()$/;"	kind:variable	line:106
 save	../aioorm/model.py	/^    async def save(self, force_insert=False, only=None):$/;"	kind:member	line:149
 savepoint	../aioorm/context.py	/^from peewee import ExecutionContext, Using, _atomic, transaction, savepoint$/;"	kind:namespace	line:1
-savepoint	../aioorm/database.py	/^    def savepoint(self, sid=None):$/;"	kind:member	line:125
-savepoint	../aioorm/mysql.py	/^    def savepoint(self, sid=None):$/;"	kind:member	line:65
+savepoint	../aioorm/database.py	/^    def savepoint(self, sid=None):$/;"	kind:member	line:130
+savepoint	../aioorm/mysql.py	/^    def savepoint(self, sid=None):$/;"	kind:member	line:66
 scalar	../aioorm/query.py	/^    async def scalar(self, as_tuple=False, convert=False):$/;"	kind:member	line:21
 select	../aioorm/model.py	/^    def select(cls, *selection):$/;"	kind:member	line:30
 select	../aioorm/model.py	/^    def select(self, *selection):$/;"	kind:member	line:8
-sequence_exists	../aioorm/database.py	/^    async def sequence_exists(self, seq):$/;"	kind:member	line:152
+sequence_exists	../aioorm/database.py	/^    async def sequence_exists(self, seq):$/;"	kind:member	line:157
 set	../aioorm/fields.py	/^    async def set(self, value):$/;"	kind:member	line:91
 setUp	../test/test_uri_parse.py	/^    def setUp(self):$/;"	kind:member	line:171
 setUpClass	../test/test_manytomany.py	/^        def setUpClass(cls, *args, **kwargs):$/;"	kind:member	line:101
@@ -796,8 +796,8 @@ setUpClass	../test/test_scv.py	/^        def setUpClass(cls, *args, **kwargs):$/
 setUpClass	../test/test_scv.py	/^        def setUpClass(cls, *args, **kwargs):$/;"	kind:member	line:143
 setUpClass	../test/test_shortcuts.py	/^        def setUpClass(cls, *args, **kwargs):$/;"	kind:member	line:107
 setUpClass	../test/test_shortcuts.py	/^        def setUpClass(cls, *args, **kwargs):$/;"	kind:member	line:129
-set_autocommit	../aioorm/database.py	/^    def set_autocommit(self, autocommit):$/;"	kind:member	line:116
-set_autocommit	../aioorm/mysql.py	/^    def set_autocommit(self, autocommit):$/;"	kind:member	line:53
+set_autocommit	../aioorm/database.py	/^    def set_autocommit(self, autocommit):$/;"	kind:member	line:121
+set_autocommit	../aioorm/mysql.py	/^    def set_autocommit(self, autocommit):$/;"	kind:member	line:54
 set_values	../test/test_manytomany.py	/^async def set_values(loop):$/;"	kind:function	line:59
 setup	../apidoc/conf.py	/^def setup(app):$/;"	kind:function	line:77
 setup	../setup.py	/^from setuptools import setup, find_packages$/;"	kind:namespace	line:2
@@ -958,12 +958,12 @@ title	../test/test_model.py	/^    title = CharField(max_length=25)$/;"	kind:vari
 todo_include_todos	../apidoc/conf.py	/^todo_include_todos = True$/;"	kind:variable	line:40
 todo_include_todos	../apidoc/conf.py	/^todo_include_todos = True$/;"	kind:variable	line:75
 transaction	../aioorm/context.py	/^from peewee import ExecutionContext, Using, _atomic, transaction, savepoint$/;"	kind:namespace	line:1
-transaction	../aioorm/database.py	/^    def transaction(self, transaction_type=None):$/;"	kind:member	line:122
-transaction	../aioorm/mysql.py	/^    def transaction(self, transaction_type=None):$/;"	kind:member	line:61
-truncate_date	../aioorm/database.py	/^    def truncate_date(self, date_part, date_field):$/;"	kind:member	line:221
-truncate_table	../aioorm/database.py	/^    async def truncate_table(self, model_class, restart_identity=False,$/;"	kind:member	line:202
+transaction	../aioorm/database.py	/^    def transaction(self, transaction_type=None):$/;"	kind:member	line:127
+transaction	../aioorm/mysql.py	/^    def transaction(self, transaction_type=None):$/;"	kind:member	line:62
+truncate_date	../aioorm/database.py	/^    def truncate_date(self, date_part, date_field):$/;"	kind:member	line:226
+truncate_table	../aioorm/database.py	/^    async def truncate_table(self, model_class, restart_identity=False,$/;"	kind:member	line:207
 truncate_table	../aioorm/model.py	/^    async def truncate_table(cls, restart_identity=False, cascade=False):$/;"	kind:member	line:142
-truncate_tables	../aioorm/database.py	/^    async def truncate_tables(self, models, restart_identity=False,$/;"	kind:member	line:208
+truncate_tables	../aioorm/database.py	/^    async def truncate_tables(self, models, restart_identity=False,$/;"	kind:member	line:213
 update	../aioorm/model.py	/^    def update(cls, __data=None, **update):$/;"	kind:member	line:37
 updated_at	../test/test_model.py	/^    updated_at = DateTimeField()$/;"	kind:variable	line:19
 uri_error.py	../aioorm/error/uri_error.py	1;"	kind:file	line:1
@@ -984,7 +984,7 @@ username	../test/test_model.py	/^    username = CharField()$/;"	kind:variable	li
 username	../test/test_shortcuts.py	/^    username = CharField()$/;"	kind:variable	line:10
 users	../test/test_manytomany.py	/^    users = AioManyToManyField(User)$/;"	kind:variable	line:21
 validate_backrefs	../aioorm/fields.py	/^                validate_backrefs = False$/;"	kind:variable	line:51
-version	../apidoc/conf.py	/^version = '0.0.6'$/;"	kind:variable	line:30
+version	../apidoc/conf.py	/^version = '0.0.7'$/;"	kind:variable	line:30
 version	../setup.py	/^    version=VERSION,$/;"	kind:variable	line:41
 wheel	../env/bin/wheel	1;"	kind:file	line:1
 wrapped_count	../aioorm/query.py	/^    async def wrapped_count(self, clear_limit=False):$/;"	kind:member	line:79
