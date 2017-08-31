@@ -13,18 +13,19 @@ class AioMySQLDatabase(AioDatabase, MySQLDatabase):
             raise Exception('Error, database not properly initialized '
                             'before closing connection')
         with self.exception_wrapper:
-            if not self._closed and self._conn_pool:
+            #if not self._closed and self._conn_pool:
+            if self._conn_pool:
                 #关闭的时候先关闭自动链接
                 await self.close_engine()
                 self._conn_pool.close()
-                self._closed = True
                 await self._conn_pool.wait_closed()
+                self._closed = True
 
     async def connect(self, loop=None):
         if self.deferred:
             raise OperationalError('Database has not been initialized')
-        if not self._closed:
-            raise OperationalError('Connection already open')
+        #if not self._closed:
+        #    raise OperationalError('Connection already open')
         self._conn_pool = await self._create_connection(loop=loop)
         self._closed = False
         # 启动自动链接
@@ -45,8 +46,8 @@ class AioMySQLDatabase(AioDatabase, MySQLDatabase):
 
     async def keep_engine(self):
         while True:
-            async with self._conn_pool.engine.acquire() as conn:
-                await conn.connection.ping()
+            async with self._conn_pool.acquire() as conn:
+                await conn.ping()
 
             await asyncio.sleep(60)
 

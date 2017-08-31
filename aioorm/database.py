@@ -18,6 +18,7 @@ class AioDatabase(Database):
                  fields=None, ops=None, autorollback=False,
                  **connect_kwargs):
         self._closed = True
+        #self._closed = False
         self._conn_pool = None
 
         self.connect_kwargs = {}
@@ -38,7 +39,8 @@ class AioDatabase(Database):
          return self._closed
 
     async def get_conn(self):
-        if self._closed:
+        #if self._closed:
+        if self._conn_pool is None:
             with self.exception_wrapper:
                 await self.connect()
 
@@ -55,16 +57,19 @@ class AioDatabase(Database):
             raise Exception('Error, database not properly initialized '
                             'before closing connection')
         with self.exception_wrapper:
-            if not self._closed and self._conn_pool:
+            #if not self._closed and self._conn_pool:
+            if self._conn_pool:
                 self._conn_pool.close()
-                self._closed = True
+                #self._closed = True
                 await self._conn_pool.wait_closed()
+                self._closed = True
 
     async def connect(self, loop=None):
         if self.deferred:
             raise OperationalError('Database has not been initialized')
-        if not self._closed:
-            raise OperationalError('Connection already open')
+        #if not self._closed:
+        #if self._conn_pool is not None:
+        #    raise OperationalError('Connection already open')
         self._conn_pool = await self._create_connection(loop=loop)
         self._closed = False
 
