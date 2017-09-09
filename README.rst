@@ -2,7 +2,7 @@
 aioorm
 ===============================
 
-version: 0.0.7
+version: 0.0.8
 
 author: hsz
 
@@ -24,6 +24,7 @@ Feature
 * ManyToManyField support
 * Shortcuts support
 * csv dump /load support
+* can use playhose.postgres_ext.JSONField
 
 Install
 --------------------------------

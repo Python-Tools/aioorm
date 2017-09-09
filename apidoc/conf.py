@@ -27,7 +27,7 @@ project = 'aioorm'
 copyright = '2017, hsz'
 author = 'hsz'
 
-version = '0.0.7'
+version = '0.0.8'
 
 release = ''
 
