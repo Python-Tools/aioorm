@@ -287,6 +287,43 @@ async def test_saving(loop):
     await db.drop_tables([User], safe=True)
     await db.close()
 
+async def test_get(loop):
+    await db.connect(loop)
+    await db.create_tables([User], safe=True)
+    assert await User.table_exists() is True
+    iq = User.insert_many([
+        {'username': 'u1'},
+        {'username': 'u2'},
+        {'username': 'u3'},
+        {'username': 'u4'}])
+    assert await iq.execute() is True
+    r = await User.get(User.username == "u1")
+    assert r.username == "u1"
+    r = await User.get(User.username == "u5")
+    assert r is None
+    await db.drop_tables([User], safe=True)
+    await db.close()
+
+async def test_get_or_create(loop):
+    await db.connect(loop)
+    await db.create_tables([User], safe=True)
+    assert await User.table_exists() is True
+    iq = User.insert_many([
+        {'username': 'u1'},
+        {'username': 'u2'},
+        {'username': 'u3'},
+        {'username': 'u4'}])
+    assert await iq.execute() is True
+    r, created = await User.get_or_create(username="u1")
+    assert r.username == "u1"
+    assert created is False
+    r, created = await User.get_or_create(username="u5")
+    assert r.username == 'u5'
+    assert created is True
+    await db.drop_tables([User], safe=True)
+    await db.close()
+
+
 class ModelMysqlTest(TestCase):
         @classmethod
         def setUpClass(cls, *args, **kwargs):
@@ -335,6 +372,12 @@ class ModelMysqlTest(TestCase):
 
         def test_saving(self):
             self.loop.run_until_complete(test_saving(self.loop))
+
+        def test_get(self):
+            self.loop.run_until_complete(test_get(self.loop))
+
+        def test_get_or_create(self):
+            self.loop.run_until_complete(test_get_or_create(self.loop))
 
 
 class ModelPostgreSQLTest(TestCase):
@@ -385,3 +428,9 @@ class ModelPostgreSQLTest(TestCase):
 
         def test_saving(self):
             self.loop.run_until_complete(test_saving(self.loop))
+
+        def test_get(self):
+            self.loop.run_until_complete(test_get(self.loop))
+
+        def test_get_or_create(self):
+            self.loop.run_until_complete(test_get_or_create(self.loop))
