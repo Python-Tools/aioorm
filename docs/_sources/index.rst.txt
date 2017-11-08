@@ -187,6 +187,9 @@ Limitations
 * untested transactions
 * only support mysql and postgresql
 
+Bug fix
+-------------
+* fixed `get` and `get_or_create` 's bug
 
 .. toctree::
    :maxdepth: 4

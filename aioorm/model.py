@@ -75,7 +75,14 @@ class AioModel(Model):
             sq = sq.where(*query)
         if kwargs:
             sq = sq.filter(**kwargs)
-        return await sq.get()
+        try:
+            result = await sq.get()
+        except StopAsyncIteration as stop:
+            return None
+        except Exception as e:
+            raise e
+        else:
+            return result
 
     @classmethod
     async def get_or_create(cls, **kwargs):
@@ -88,19 +95,36 @@ class AioModel(Model):
                 query = query.where(getattr(cls, field) == value)
 
         try:
-            return await query.get(), False
-        except cls.DoesNotExist:
+            result = await query.get()
+        except StopAsyncIteration as stop:
             try:
                 params = dict((k, v) for k, v in kwargs.items()
                               if '__' not in k)
                 params.update(defaults)
-                async with cls._meta.database.atomic():
-                    return await cls.create(**params), True
+                #async with cls._meta.database.atomic():
+                return await cls.create(**params), True
             except IntegrityError as exc:
-                try:
-                    return await query.get(), False
-                except cls.DoesNotExist:
-                    raise exc
+                raise exc
+        except Exception as e:
+            raise e
+        else:
+            return result, False
+
+        # try:
+        #     return await query.get(), False
+        # except cls.DoesNotExist:
+        #     print("")
+        #     try:
+        #         params = dict((k, v) for k, v in kwargs.items()
+        #                       if '__' not in k)
+        #         params.update(defaults)
+        #         async with cls._meta.database.atomic():
+        #             return await cls.create(**params), True
+        #     except IntegrityError as exc:
+        #         try:
+        #             return await query.get(), False
+        #         except cls.DoesNotExist:
+        #             raise exc
 
     @classmethod
     async def table_exists(cls):

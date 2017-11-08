@@ -2,7 +2,7 @@
 aioorm
 ===============================
 
-* version: 0.1.0
+* version: 0.1.1
 
 * status: dev
 
@@ -182,6 +182,11 @@ Limitations
 -----------
 * untested transactions
 * only support mysql and postgresql
+
+
+Bug fix
+-------------
+* fixed `get` and `get_or_create` 's bug
 
 .. _peewee: http://docs.peewee-orm.com/en/latest/
 .. _torpeewee: https://github.com/snower/torpeewee

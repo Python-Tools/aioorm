@@ -1,6 +1,6 @@
 # aioorm
 
-+ version: 0.1.0
++ version: 0.1.1
 + status: dev
 + author: hsz
 + email: hsz1273327@gmail.com
@@ -171,3 +171,6 @@ Documentation
 + untested transactions
 + only support mysql and postgresql
 
+## Bug fix
+
++ fixed `get` and `get_or_create` 's bug
