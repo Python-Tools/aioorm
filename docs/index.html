@@ -1,0 +1,295 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Welcome to aioorm’s documentation! &#8212; aioorm  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="aioorm package" href="aioorm.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="welcome-to-aioorm-s-documentation">
+<h1>Welcome to aioorm’s documentation!<a class="headerlink" href="#welcome-to-aioorm-s-documentation" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>version: 0.1.0</li>
+<li>status: dev</li>
+<li>author: hsz</li>
+<li>email: <a class="reference external" href="mailto:hsz1273327&#37;&#52;&#48;gmail&#46;com">hsz1273327<span>&#64;</span>gmail<span>&#46;</span>com</a></li>
+</ul>
+<hr class="docutils" />
+<p>Asyncio interface for <a class="reference external" href="http://docs.peewee-orm.com/en/latest/">peewee</a> modeled after <a class="reference external" href="https://github.com/snower/torpeewee">torpeewee</a></p>
+<div class="section" id="feature">
+<h2>Feature<a class="headerlink" href="#feature" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>support mysql and postgresql</li>
+<li>database factory using database URL</li>
+<li>use peewee’s fields</li>
+<li>ManyToManyField support</li>
+<li>Shortcuts support</li>
+<li>csv dump /load support</li>
+<li>can use playhose.postgres_ext.JSONField</li>
+</ul>
+</div>
+<div class="section" id="install">
+<h2>Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">aioorm</span></code></li>
+</ul>
+</div>
+<div class="section" id="example-grud">
+<h2>Example: GRUD<a class="headerlink" href="#example-grud" title="Permalink to this headline">¶</a></h2>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">aioorm</span> <span class="k">import</span> <span class="n">AioModel</span><span class="p">,</span> <span class="n">AioMySQLDatabase</span>
+<span class="kn">from</span> <span class="nn">peewee</span> <span class="k">import</span> <span class="n">CharField</span><span class="p">,</span> <span class="n">TextField</span><span class="p">,</span> <span class="n">DateTimeField</span>
+<span class="kn">from</span> <span class="nn">peewee</span> <span class="k">import</span> <span class="n">ForeignKeyField</span><span class="p">,</span> <span class="n">PrimaryKeyField</span>
+
+
+<span class="n">db</span> <span class="o">=</span> <span class="n">AioMySQLDatabase</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">3306</span><span class="p">,</span>
+                     <span class="n">user</span><span class="o">=</span><span class="s1">&#39;root&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">AioModel</span><span class="p">):</span>
+    <span class="n">username</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">()</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">db</span>
+
+
+<span class="k">class</span> <span class="nc">Blog</span><span class="p">(</span><span class="n">AioModel</span><span class="p">):</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">ForeignKeyField</span><span class="p">(</span><span class="n">User</span><span class="p">)</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+    <span class="n">content</span> <span class="o">=</span> <span class="n">TextField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">pub_date</span> <span class="o">=</span> <span class="n">DateTimeField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">pk</span> <span class="o">=</span> <span class="n">PrimaryKeyField</span><span class="p">()</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">db</span>
+
+
+<span class="c1"># create connection pool</span>
+<span class="k">await</span> <span class="n">db</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">loop</span><span class="p">)</span>
+
+<span class="c1"># count</span>
+<span class="k">await</span> <span class="n">User</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+
+<span class="c1"># async iteration on select query</span>
+<span class="k">async</span> <span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">User</span><span class="o">.</span><span class="n">select</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+
+<span class="c1"># fetch all records as a list from a query in one pass</span>
+<span class="n">users</span> <span class="o">=</span> <span class="k">await</span> <span class="n">User</span><span class="o">.</span><span class="n">select</span><span class="p">()</span>
+
+<span class="c1"># insert</span>
+<span class="n">user</span> <span class="o">=</span> <span class="k">await</span> <span class="n">User</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s1">&#39;kszucs&#39;</span><span class="p">)</span>
+
+<span class="c1"># modify</span>
+<span class="n">user</span><span class="o">.</span><span class="n">username</span> <span class="o">=</span> <span class="s1">&#39;krisztian&#39;</span>
+<span class="k">await</span> <span class="n">user</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+<span class="c1"># async iteration on blog set</span>
+<span class="p">[</span><span class="n">b</span><span class="o">.</span><span class="n">title</span> <span class="k">async</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">user</span><span class="o">.</span><span class="n">blog_set</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">Blog</span><span class="o">.</span><span class="n">title</span><span class="p">)]</span>
+
+<span class="c1"># close connection pool</span>
+<span class="k">await</span> <span class="n">db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="c1"># see more in the tests</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-many-to-many">
+<h2>Example: Many to many<a class="headerlink" href="#example-many-to-many" title="Permalink to this headline">¶</a></h2>
+<p>Note that <cite>AioManyToManyField</cite> must be used instead of <cite>ManyToMany</cite>.</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">aioorm</span> <span class="k">import</span> <span class="n">AioManyToManyField</span>
+
+
+<span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">AioModel</span><span class="p">):</span>
+    <span class="n">username</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">(</span><span class="n">unique</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">db</span>
+
+
+<span class="k">class</span> <span class="nc">Note</span><span class="p">(</span><span class="n">AioModel</span><span class="p">):</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">TextField</span><span class="p">()</span>
+    <span class="n">users</span> <span class="o">=</span> <span class="n">AioManyToManyField</span><span class="p">(</span><span class="n">User</span><span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">db</span>
+
+
+<span class="n">NoteUserThrough</span> <span class="o">=</span> <span class="n">Note</span><span class="o">.</span><span class="n">users</span><span class="o">.</span><span class="n">get_through_model</span><span class="p">()</span>
+
+
+<span class="k">async</span> <span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">note</span><span class="o">.</span><span class="n">users</span><span class="p">:</span>
+    <span class="c1"># do something with the users</span>
+</pre></div>
+</div>
+<p>Currently the only limitation I’m aware of immidiate setting of instance relation must be replaced with a method call:</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># original, which is not supported</span>
+<span class="n">charlie</span><span class="o">.</span><span class="n">notes</span> <span class="o">=</span> <span class="p">[</span><span class="n">n2</span><span class="p">,</span> <span class="n">n3</span><span class="p">]</span>
+
+<span class="c1"># use instead</span>
+<span class="k">await</span> <span class="n">charlie</span><span class="o">.</span><span class="n">notes</span><span class="o">.</span><span class="n">set</span><span class="p">([</span><span class="n">n2</span><span class="p">,</span> <span class="n">n3</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="serializing">
+<h2>Serializing<a class="headerlink" href="#serializing" title="Permalink to this headline">¶</a></h2>
+<p>Converting to dict requires the asyncified version of <cite>model_to_dict</cite></p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">aioorm</span> <span class="k">import</span> <span class="n">model_to_dict</span>
+
+<span class="n">serialized</span> <span class="o">=</span> <span class="k">await</span> <span class="n">model_to_dict</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="dump-to-csv">
+<h2>Dump to csv<a class="headerlink" href="#dump-to-csv" title="Permalink to this headline">¶</a></h2>
+<p>tables can be dump to a csv file.</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">aioorm.utils</span> <span class="k">import</span> <span class="n">aiodump_csv</span>
+<span class="n">query</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">User_csv</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+<span class="k">await</span> <span class="n">aiodump_csv</span><span class="p">(</span><span class="n">query</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="n">filepath</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://github.com/Python-Tools/aioorm">Documentation on Readthedocs</a>.</p>
+</div>
+<div class="section" id="todo">
+<h2>TODO<a class="headerlink" href="#todo" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>async dataset support</li>
+<li>more test</li>
+</ul>
+</div>
+<div class="section" id="limitations">
+<h2>Limitations<a class="headerlink" href="#limitations" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>untested transactions</li>
+<li>only support mysql and postgresql</li>
+</ul>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="aioorm.html">aioorm package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="aioorm.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="aioorm.html#aioorm-echo-module">aioorm.echo module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="aioorm.html#module-aioorm">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
+<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+</ul>
+</div>
+<div class="section" id="related-projects">
+<h1>Related Projects<a class="headerlink" href="#related-projects" title="Permalink to this headline">¶</a></h1>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Welcome to aioorm’s documentation!</a><ul>
+<li><a class="reference internal" href="#feature">Feature</a></li>
+<li><a class="reference internal" href="#install">Install</a></li>
+<li><a class="reference internal" href="#example-grud">Example: GRUD</a></li>
+<li><a class="reference internal" href="#example-many-to-many">Example: Many to many</a></li>
+<li><a class="reference internal" href="#serializing">Serializing</a></li>
+<li><a class="reference internal" href="#dump-to-csv">Dump to csv</a></li>
+<li><a class="reference internal" href="#documentation">Documentation</a></li>
+<li><a class="reference internal" href="#todo">TODO</a></li>
+<li><a class="reference internal" href="#limitations">Limitations</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+<li><a class="reference internal" href="#related-projects">Related Projects</a></li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+      <li>Next: <a href="aioorm.html" title="next chapter">aioorm package</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, hsz.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

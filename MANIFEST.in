@@ -2,4 +2,4 @@
 include LICENSE
 include README.rst
 recursive-include requirements *.txt
-recursive-include aioorm *.py
+recursive-include aioorm *.pyx *.pxd *.pxi *.py *.c *.h

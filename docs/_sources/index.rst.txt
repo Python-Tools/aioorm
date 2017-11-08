@@ -1,6 +1,10 @@
+.. aioorm documentation master file, created by
+   sphinx-quickstart on Wed Nov  8 22:06:45 2017.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
 
-aioorm
-===============================
+Welcome to aioorm's documentation!
+==================================
 
 * version: 0.1.0
 
@@ -182,6 +186,24 @@ Limitations
 -----------
 * untested transactions
 * only support mysql and postgresql
+
+
+.. toctree::
+   :maxdepth: 4
+   :caption: Contents:
+
+   aioorm
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+
+Related Projects
+====================
 
 .. _peewee: http://docs.peewee-orm.com/en/latest/
 .. _torpeewee: https://github.com/snower/torpeewee

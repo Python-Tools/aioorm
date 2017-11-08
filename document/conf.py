@@ -27,7 +27,7 @@ project = 'aioorm'
 copyright = '2017, hsz'
 author = 'hsz'
 
-version = '0.0.8'
+version = '0.1.0'
 
 release = ''
 
@@ -73,7 +73,7 @@ epub_copyright = copyright
 epub_exclude_files = ['search.html']
 
 todo_include_todos = True
-
+url_doc_root = "xxxx"#
 def setup(app):
     app.add_config_value('recommonmark_config', {
         'url_resolver': lambda url: url_doc_root + url,
