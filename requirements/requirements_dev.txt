@@ -6,3 +6,7 @@ coverage
 mypy
 mypy-extensions
 lxml
+pylint
+pep8
+autopep8
+pydocstyle
