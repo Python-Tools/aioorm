@@ -1,5 +1,3 @@
-
-peewee
 aiopg
 aiomysql
 aitertools

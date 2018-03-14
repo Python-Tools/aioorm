@@ -1,2 +1,0 @@
-class InvalidURI(Exception):
-    pass

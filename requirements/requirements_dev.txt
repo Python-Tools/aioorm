@@ -2,3 +2,7 @@ wheel
 sphinx
 sphinxcontrib-napoleon
 recommonmark
+coverage
+mypy
+mypy-extensions
+lxml
