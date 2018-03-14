@@ -1,3 +1,6 @@
+from aioorm.query.many2many import ManyToManyQuery
+
+
 class FieldAccessor:
     def __init__(self, model, field, name):
         self.model = model
@@ -75,3 +78,28 @@ class ObjectIdAccessor:
 
     def __set__(self, instance, value):
         setattr(instance, self.field.name, value)
+
+
+class ManyToManyFieldAccessor(FieldAccessor):
+    def __init__(self, model, field, name):
+        super().__init__(model, field, name)
+        self.model = field.model
+        self.rel_model = field.rel_model
+        self.through_model = field.get_through_model()
+        self.src_fk = self.through_model._meta.model_refs[self.model][0]
+        self.dest_fk = self.through_model._meta.model_refs[self.rel_model][0]
+
+    def __get__(self, instance, instance_type=None, force_query=False):
+        if instance is not None:
+            if not force_query and isinstance(getattr(instance, self.src_fk.backref), list):
+                return [getattr(obj, self.dest_fk.name) for obj in getattr(instance, self.src_fk.backref)]
+            else:
+                return (ManyToManyQuery(instance, self, self.rel_model)
+                        .join(self.through_model)
+                        .join(self.model)
+                        .where(self.src_fk == instance))
+        return self.field
+
+    def __set__(self, instance, value):
+        query = self.__get__(instance, force_query=True)
+        query.add(value, clear_existing=True)

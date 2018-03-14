@@ -21,6 +21,7 @@ class attrdict(dict):
         return d
 
 
+SENTINEL = object()
 #: Operations for use in SQL expressions.
 OP = attrdict(
     AND='AND',
@@ -133,3 +134,19 @@ ForeignKeyMetadata = collections.namedtuple(
     'ForeignKeyMetadata',
     ('column', 'dest_table', 'dest_column', 'table')
 )
+
+# pg
+HCONTAINS_DICT = '@>'
+HCONTAINS_KEYS = '?&'
+HCONTAINS_KEY = '?'
+HCONTAINS_ANY_KEY = '?|'
+HKEY = '->'
+HUPDATE = '||'
+ACONTAINS = '@>'
+ACONTAINS_ANY = '&&'
+TS_MATCH = '@@'
+JSONB_CONTAINS = '@>'
+JSONB_CONTAINED_BY = '<@'
+JSONB_CONTAINS_ANY_KEY = '?|'
+JSONB_CONTAINS_ALL_KEYS = '?&'
+JSONB_EXISTS = '?'

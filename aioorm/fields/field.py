@@ -106,3 +106,34 @@ class Field(ColumnBase):
         if self.collation:
             accum.append(SQL('COLLATE %s' % self.collation))
         return NodeList(accum)
+
+
+class FieldAlias(Field):
+    def __init__(self, source, field):
+        self.source = source
+        self.model = source.model
+        self.field = field
+
+    @classmethod
+    def create(cls, source, field):
+        class _FieldAlias(cls, type(field)):
+            pass
+        return _FieldAlias(source, field)
+
+    def clone(self):
+        return FieldAlias(self.source, self.field)
+
+    def coerce(self, value):
+        return self.field.coerce(value)
+
+    def python_value(self, value):
+        return self.field.python_value(value)
+
+    def db_value(self, value):
+        return self.field.db_value(value)
+
+    def __getattr__(self, attr):
+        return self.source if attr == 'model' else getattr(self.field, attr)
+
+    def __sql__(self, ctx):
+        return ctx.sql(Column(self.source, self.field.column_name))

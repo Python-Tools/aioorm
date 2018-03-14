@@ -1,7 +1,11 @@
-import asyncio
-from aioorm.utils import merge_dict
-from aioorm.utils import _callable_context_manager
+#import asyncio
+import threading
+from aioorm.const import FIELD, OP, SENTINEL
+from aioorm.error import OperationalError, __exception_wrapper__
+from aioorm.utils import merge_dict, __deprecated__, _callable_context_manager
 from aioorm.sql_generation.context import Context
+from aioorm.transaction import _manual, _atomic, _transaction, _savepoint
+from .connect import _ConnectionLocal, _ConnectionState, _NoopLock, ConnectionContext
 
 
 class Database(_callable_context_manager):
@@ -21,12 +25,8 @@ class Database(_callable_context_manager):
     safe_drop_index = True
     sequences = False
 
-    def __init__(self,
-                 database,
-                 autorollback=False,
-                 field_types=None,
-                 operations=None,
-                 **kwargs):
+    def __init__(self, database, thread_safe=True, autorollback=False,
+                 field_types=None, operations=None, autocommit=None, **kwargs):
         self._field_types = merge_dict(FIELD, self.field_types)
         self._operations = merge_dict(OP, self.operations)
         if field_types:
@@ -35,6 +35,24 @@ class Database(_callable_context_manager):
             self._operations.update(operations)
 
         self.autorollback = autorollback
+        self.thread_safe = thread_safe
+        if thread_safe:
+            self._state = _ConnectionLocal()
+            self._lock = threading.Lock()
+        else:
+            self._state = _ConnectionState()
+            self._lock = _NoopLock()
+
+        if autocommit is not None:
+            __deprecated__('Peewee no longer uses the "autocommit" option, as '
+                           'the semantics now require it to always be True. '
+                           'Because some database-drivers also use the '
+                           '"autocommit" parameter, you are receiving a '
+                           'warning so you may update your code and remove '
+                           'the parameter, as in the future, specifying '
+                           'autocommit could impact the behavior of the '
+                           'database driver you are using.')
+
         self.connect_params = {}
         self.init(database, **kwargs)
 

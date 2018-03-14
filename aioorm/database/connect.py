@@ -1,9 +1,10 @@
+import threading
 from aioorm.utils import _callable_context_manager
 
 
 class _ConnectionState:
     def __init__(self, **kwargs):
-        super(_ConnectionState, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.reset()
 
     def reset(self):
@@ -23,9 +24,11 @@ class _ConnectionLocal(_ConnectionState, threading.local):
 class _NoopLock:
     __slots__ = ()
 
-    def __enter__(self): return self
+    def __enter__(self):
+        return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb): pass
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        pass
 
 
 class ConnectionContext(_callable_context_manager):

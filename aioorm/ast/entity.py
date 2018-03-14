@@ -373,9 +373,39 @@ class QualifiedNames(WrappedNode):
             return ctx.sql(self.node)
 
 
+class _LookupNode(ColumnBase):
+    def __init__(self, node, parts):
+        self.node = node
+        self.parts = parts
+        super(_LookupNode, self).__init__()
+
+    def clone(self):
+        return type(self)(self.node, list(self.parts))
+
+
+class ObjectSlice(_LookupNode):
+    @classmethod
+    def create(cls, node, value):
+        if isinstance(value, slice):
+            parts = [value.start or 0, value.stop or 0]
+        elif isinstance(value, int):
+            parts = [value]
+        else:
+            parts = map(int, value.split(':'))
+        return cls(node, parts)
+
+    def __sql__(self, ctx):
+        return (ctx
+                .sql(self.node)
+                .literal('[%s]' % ':'.join(str(p + 1) for p in self.parts)))
+
+    def __getitem__(self, value):
+        return ObjectSlice.create(self, value)
+
+
 __all__ = ['ColumnBase', 'Expression', 'StringExpression',
            'SQL', 'Check', 'NodeList', 'CommaNodeList',
            'EnclosedNodeList', 'Tuple', 'WrappedNode',
            'BitwiseMixin', 'BitwiseNegated', 'Negated',
-           'Ordering', 'Asc', 'Desc',
-           'Entity', 'EntityFactory','QualifiedNames']
+           'Ordering', 'Asc', 'Desc', 'ObjectSlice',
+           'Entity', 'EntityFactory', 'QualifiedNames']

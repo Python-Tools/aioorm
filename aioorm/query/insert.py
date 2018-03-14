@@ -4,6 +4,7 @@ from aioorm.ast.entity import SQL, CommaNodeList, EnclosedNodeList
 from aioorm.ast.value import Value
 from aioorm.ast.on_conflict import OnConflict
 from aioorm.ast.node import Node
+from aioorm.fields.field import Field
 from .write import _WriteQuery
 from .select import SelectQuery
 
