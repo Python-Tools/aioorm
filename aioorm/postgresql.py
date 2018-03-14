@@ -22,7 +22,8 @@ class AioPostgreSQLDatabase(AioDatabase, PostgresqlExtDatabase):
         self._conn_pool.release(conn)
 
     async def cancel(self,con,timeout=None):
-        con.cancel(timeout=timeout)
+        #con.cancel(timeout=timeout)
+        con.cancel()
 
     async def execute_sql(self, sql, params=None, require_commit=True):
         with self.exception_wrapper:
