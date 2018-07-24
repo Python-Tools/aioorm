@@ -1,12 +1,8 @@
-wheel
-sphinx
-sphinxcontrib-napoleon
-recommonmark
 coverage
 mypy
 mypy-extensions
 lxml
-pylint
+wheel
+pydocstyle
 pep8
 autopep8
-pydocstyle
