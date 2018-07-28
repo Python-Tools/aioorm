@@ -83,7 +83,7 @@ class ManyToManyMysqlTest(TestCase):
             """Configure database managers, create test tables.
             """
             database = AioMySQLDatabase('test', host='localhost', port=3306,
-                       user='root', password='hsz881224')
+                       user='root', password='dev123')
             db.initialize(database)
             cls.loop = asyncio.new_event_loop()
             asyncio.set_event_loop(cls.loop)
@@ -101,8 +101,8 @@ class ManyToManyPostgreSQLTest(TestCase):
         def setUpClass(cls, *args, **kwargs):
             """Configure database managers, create test tables.
             """
-            database = AioPostgreSQLDatabase('test_ext', host='localhost', port=5432,
-                      user='huangsizhe', password='')
+            database = AioPostgreSQLDatabase('test', host='localhost', port=5432,
+                      user='postgres')
             db.initialize(database)
             cls.loop = asyncio.new_event_loop()
             asyncio.set_event_loop(cls.loop)

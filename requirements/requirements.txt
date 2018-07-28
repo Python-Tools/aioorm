@@ -3,3 +3,4 @@ aiopg
 aiomysql
 aitertools
 aiofiles
+async-timeout

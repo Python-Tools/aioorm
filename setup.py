@@ -5,7 +5,7 @@ from os import path
 REQUIREMETS_DEV_FILE = 'requirements_dev.txt'
 REQUIREMETS_FILE = 'requirements.txt'
 PROJECTNAME = 'aioorm'
-VERSION = '0.1.3'
+VERSION = '0.1.4'
 DESCRIPTION = 'a simple orm suport asyncio,fork of aiopeewee'
 URL = 'https://github.com/Python-Tools/aioorm'
 AUTHOR = 'hsz'

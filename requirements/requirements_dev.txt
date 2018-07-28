@@ -1,4 +1,8 @@
+coverage
+mypy
+mypy-extensions
+lxml
 wheel
-sphinx
-sphinxcontrib-napoleon
-recommonmark
+pydocstyle
+pep8
+autopep8
