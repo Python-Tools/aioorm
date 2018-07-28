@@ -1,4 +1,0 @@
-
-
-class TableMeta(type):
-    pass
