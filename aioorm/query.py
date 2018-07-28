@@ -1,5 +1,10 @@
-from peewee import Query, RawQuery, SelectQuery, NoopSelectQuery
-from peewee import CompoundSelect, DeleteQuery, UpdateQuery, InsertQuery
+from peewee import Query, RawQuery, SelectQuery
+from peewee import (
+    CompoundSelectQuery as CompoundSelect, 
+    Delete as DeleteQuery, 
+    Update as UpdateQuery, 
+    Insert as InsertQuery 
+)
 from peewee import _WriteQuery
 
 RESULTS_NAIVE = 1
@@ -157,9 +162,6 @@ class AioSelectQuery(AioQuery, SelectQuery):
     def __hash__(self):
         return id(self)
 
-
-class AioNoopSelectQuery(AioSelectQuery, NoopSelectQuery):
-    pass
 
 
 class AioCompoundSelect(AioSelectQuery, CompoundSelect):
