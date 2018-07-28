@@ -5,16 +5,15 @@ class Query:
 
     def __init__(self,*args,**kwargs):
         self._cache_sql = ""
-        self._return_row = None
-        self.end = False
+        self._row_type = None
 
     @property
-    def sql(self):
-        return self._cache_sql
+    def sql_str(self):
+        return self._cache_sql+";"
 
     @property
-    def return_row(self):
-        return self._return_row
+    def row_type(self):
+        return self._row_type
 
     
 

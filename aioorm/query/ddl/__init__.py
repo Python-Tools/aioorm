@@ -10,7 +10,7 @@ ALTER: 修改数据库和表等对象的结构
 考虑到orm的特殊性,这边只实现CREATE和DROP
 """
 
-from .create_query import CreateQuery
-from .drop_query import DropQuery
+#from .create_query import CreateQuery
+#from .drop_query import DropQuery
 
-__all__=['CreateQuery','DropQuery']
+#__all__=['CreateQuery','DropQuery']

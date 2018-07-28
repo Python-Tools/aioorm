@@ -1,17 +1,18 @@
+import asyncio
+from typing import Optional
 import aiopg
-
-from ..connect_base import ConnectBase
-from ..error import NotConnectYet
+from .core import AioConnectBase
 
 
-class PostgresqlConnect(ConnectBase):
+class PostgresqlConnect(AioConnectBase):
 
-    def __init__(self, *, username="postgres",
-                 password="",
-                 host="localhost",
-                 port=5432,
-                 database='postgres',
-                 loop=None, **kwargs):
+    def __init__(self, *, username: str="postgres",
+                 password: str="",
+                 host: str="localhost",
+                 port: int=5432,
+                 database: str='postgres',
+                 loop: Optional[asyncio.AbstractEventLoop]=None,
+                 **kwargs):
 
         super().__init__(
             username=username,
@@ -23,20 +24,13 @@ class PostgresqlConnect(ConnectBase):
             **kwargs
         )
 
-    @property
-    def pool(self):
-        if self._pool is None:
-            raise NotConnectYet("please connect again")
-        return self._pool
-
-    async def __aenter__(self):
-        await self.connect()
-        return self
-
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
-        await self.close()
-
     async def connect(self):
+        """建立连接.
+
+        Returns:
+            (aiopg.pool.Pool): 返回池对象
+        """
+
         if self.password:
             dsn = f"dbname={self.database} user={self.username} password={self.password} host={self.host} port={self.port}"
         else:
@@ -47,27 +41,3 @@ class PostgresqlConnect(ConnectBase):
             **self.kwargs
         )
         return self._pool
-
-    async def close(self):
-        self.pool.close()
-        rst = await self.pool.wait_closed()
-        self._pool = None
-        return rst
-
-    async def execute_sql(self, sql_str: str, row_type=None):
-        if not sql_str.endswith(";"):
-            sql_str = sql_str + ";"
-        async with self.pool.acquire() as conn:
-            async with conn.cursor() as cur:
-                await cur.execute(sql_str)
-                async for row in cur:
-                    if row_type is None:
-                        yield row
-                    else:
-                        row_type(*row)
-
-    async def execute(self, sql_ast):
-        sql_str = sql_ast.sql
-        row_type = sql_ast.return_row
-        async for row in execute_sql(sql_str, row_type):
-            yield row

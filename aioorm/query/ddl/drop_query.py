@@ -1,7 +1,7 @@
 from aioorm.entity.table import Table
 from aioorm.entity.view import View
 from typing import Any
-from ..core import Query
+from aioorm.abcs.query import Query
 
 class DropQuery(Query):
     def __init__(self):
@@ -21,15 +21,13 @@ class DropQuery(Query):
         Returns:
             CreateQuery: 返回自身
         """
-        if self.end = True:
-            raise SqlEnd("create query already end: {self._cache_sql}")
+
         if not issubclass(entity,Table):
             raise ParamError("entity must be subclass of Table")
         if safe:
             self._cache_sql=f"TABLE IF EXISTS {entity.__name__}"
         else:
             self._cache_sql=f"TABLE {entity.__name__}"
-        self.end = True
         return self
 
     def database(self,entity:str)->CreateQuery:
@@ -44,18 +42,13 @@ class DropQuery(Query):
         Returns:
             CreateQuery: 语句自身
         """
-        if self.end = True:
-            raise SqlEnd("create query already end: {self._cache_sql}")
      
         self._cache_sql += f"Database {entity.__name__}"
-        self.end = True
         return self
 
     def view(self,entity:Any)->CreateQuery:
-        if self.end = True:
-            raise SqlEnd("create query already end: {self._cache_sql}")
         if not issubclass(entity,View):
             raise ParamError("entity must be subclass of View")
         self._cache_sql=f"""VIEW {entity.__name__}"""
-        self.end = True
+
         return self

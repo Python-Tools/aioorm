@@ -1,17 +1,31 @@
+import asyncio
+from typing import Optional
 import aiomysql
-
-from ..connect_base import ConnectBase
-from ..error import NotConnectYet
+from .core import AioConnectBase
 
 
-class MysqlConnect(ConnectBase):
+class MysqlConnect(AioConnectBase):
+    """Mysql的连接对象.
 
-    def __init__(self, *, username="root",
-                 password="",
-                 host="localhost",
-                 port=3306,
-                 database='mysql',
-                 loop=None, **kwargs):
+    Attributes:
+        username (str): 登录用户名
+        password (str): 登录密码
+        host (str): 登录目标主机名或ip
+        port (int): 登录目标主机端口
+        database (str): 登录的数据库
+        loop (asyncio.AbstractEventLoop): 事件循环
+        kwargs (Dict[str,Any]): 建立连接池时候的关键字参数
+
+        pool (aiomysql.pool.Pool): aiomysql的连接池对象(property)
+    """
+
+    def __init__(self, *, username: str="root",
+                 password: str="",
+                 host: str="localhost",
+                 port: int=3306,
+                 database: str='mysql',
+                 loop: Optional[asyncio.AbstractEventLoop] =None,
+                 **kwargs):
 
         super().__init__(
             username=username,
@@ -23,20 +37,13 @@ class MysqlConnect(ConnectBase):
             **kwargs
         )
 
-    @property
-    def pool(self):
-        if self._pool is None:
-            raise NotConnectYet("please connect again")
-        return self._pool
-
-    async def __aenter__(self):
-        await self.connect()
-        return self
-
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
-        await self.close()
-
     async def connect(self):
+        """建立连接.
+
+        Returns:
+            (aiomysql.pool.Pool): 返回池对象
+        """
+
         self._pool = await aiomysql.create_pool(
             host=self.host,
             port=self.port,
@@ -47,27 +54,3 @@ class MysqlConnect(ConnectBase):
             **self.kwargs
         )
         return self._pool
-
-    async def close(self):
-        self.pool.close()
-        rst = await self.pool.wait_closed()
-        self._pool = None
-        return rst
-
-    async def execute_sql(self, sql_str: str, row_type=None):
-        if not sql_str.endswith(";"):
-            sql_str = sql_str + ";"
-        async with self.pool.acquire() as conn:
-            async with conn.cursor() as cur:
-                await cur.execute(sql_str)
-                async for row in cur:
-                    if row_type is None:
-                        yield row
-                    else:
-                        row_type(*row)
-
-    async def execute(self, sql_ast):
-        sql_str = sql_ast.sql
-        row_type = sql_ast.return_row
-        async for row in execute_sql(sql_str, row_type):
-            yield row
