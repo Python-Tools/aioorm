@@ -1,0 +1,328 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>aioorm.utils.csv_utils package &#8212; aioorm  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="aioorm-utils-csv-utils-package">
+<h1>aioorm.utils.csv_utils package<a class="headerlink" href="#aioorm-utils-csv-utils-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-aioorm.utils.csv_utils.csv_dump">
+<span id="aioorm-utils-csv-utils-csv-dump-module"></span><h2>aioorm.utils.csv_utils.csv_dump module<a class="headerlink" href="#module-aioorm.utils.csv_utils.csv_dump" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aioorm.utils.csv_utils.csv_dump.aiodump_csv">
+<code class="descclassname">aioorm.utils.csv_utils.csv_dump.</code><code class="descname">aiodump_csv</code><span class="sig-paren">(</span><em>query</em>, <em>file_or_name</em>, <em>loop=None</em>, <em>include_header=True</em>, <em>close_file=False</em>, <em>append=True</em>, <em>csv_writer=&lt;class 'aioorm.utils.csv_utils.csv_dump.csv_writer'&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aioorm/utils/csv_utils/csv_dump.html#aiodump_csv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aioorm.utils.csv_utils.csv_dump.aiodump_csv" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="aioorm.utils.csv_utils.csv_dump.csv_writer">
+<em class="property">class </em><code class="descclassname">aioorm.utils.csv_utils.csv_dump.</code><code class="descname">csv_writer</code><span class="sig-paren">(</span><em>fh</em>, <em>fieldnames=None</em>, <em>delimiter='</em>, <em>'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aioorm/utils/csv_utils/csv_dump.html#csv_writer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aioorm.utils.csv_utils.csv_dump.csv_writer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="aioorm.utils.csv_utils.csv_dump.csv_writer.writeheader">
+<code class="descname">writeheader</code><span class="sig-paren">(</span><em>fieldnames=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aioorm/utils/csv_utils/csv_dump.html#csv_writer.writeheader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aioorm.utils.csv_utils.csv_dump.csv_writer.writeheader" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aioorm.utils.csv_utils.csv_dump.csv_writer.writerow">
+<code class="descname">writerow</code><span class="sig-paren">(</span><em>row</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aioorm/utils/csv_utils/csv_dump.html#csv_writer.writerow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aioorm.utils.csv_utils.csv_dump.csv_writer.writerow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-aioorm.utils.csv_utils.csv_loader">
+<span id="aioorm-utils-csv-utils-csv-loader-module"></span><h2>aioorm.utils.csv_utils.csv_loader module<a class="headerlink" href="#module-aioorm.utils.csv_utils.csv_loader" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="aioorm.utils.csv_utils.csv_loader.Get_Reader">
+<em class="property">class </em><code class="descclassname">aioorm.utils.csv_utils.csv_loader.</code><code class="descname">Get_Reader</code><span class="sig-paren">(</span><em>file_or_name</em>, <em>**reader_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aioorm/utils/csv_utils/csv_loader.html#Get_Reader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aioorm.utils.csv_utils.csv_loader.Get_Reader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="aioorm.utils.csv_utils.csv_loader.Loader">
+<em class="property">class </em><code class="descclassname">aioorm.utils.csv_utils.csv_loader.</code><code class="descname">Loader</code><span class="sig-paren">(</span><em>db_or_model</em>, <em>file_or_name</em>, <em>fields=None</em>, <em>field_names=None</em>, <em>has_header=True</em>, <em>sample_size=10</em>, <em>converter=None</em>, <em>db_table=None</em>, <em>pk_in_csv=False</em>, <em>**reader_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aioorm/utils/csv_utils/csv_loader.html#Loader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aioorm.utils.csv_utils.csv_loader.Loader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">aioorm.utils.csv_utils.csv_loader._CSVReader</span></code></p>
+<p>Load the contents of a CSV file into a database and return a model class
+suitable for working with the CSV data.
+:param db_or_model: a peewee Database instance or a Model class.
+:param file_or_name: the filename of the CSV file <em>or</em> a file handle.
+:param list fields: A list of peewee Field() instances appropriate to</p>
+<blockquote>
+<div>the values in the CSV file.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>field_names</strong> (<em>list</em>) – A list of names to use for the fields.</li>
+<li><strong>has_header</strong> (<em>bool</em>) – Whether the first row of the CSV file is a header.</li>
+<li><strong>sample_size</strong> (<em>int</em>) – Number of rows to introspect if fields are not
+defined.</li>
+<li><strong>converter</strong> – A RowConverter instance to use.</li>
+<li><strong>db_table</strong> (<em>str</em>) – Name of table to store data in (if not specified, the
+table name will be derived from the CSV filename).</li>
+<li><strong>reader_kwargs</strong> – Arbitrary arguments to pass to the CSV reader.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="aioorm.utils.csv_utils.csv_loader.Loader.analyze_csv">
+<code class="descname">analyze_csv</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aioorm/utils/csv_utils/csv_loader.html#Loader.analyze_csv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aioorm.utils.csv_utils.csv_loader.Loader.analyze_csv" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aioorm.utils.csv_utils.csv_loader.Loader.clean_field_name">
+<code class="descname">clean_field_name</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aioorm/utils/csv_utils/csv_loader.html#Loader.clean_field_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aioorm.utils.csv_utils.csv_loader.Loader.clean_field_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aioorm.utils.csv_utils.csv_loader.Loader.get_converter">
+<code class="descname">get_converter</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aioorm/utils/csv_utils/csv_loader.html#Loader.get_converter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aioorm.utils.csv_utils.csv_loader.Loader.get_converter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aioorm.utils.csv_utils.csv_loader.Loader.get_model_class">
+<code class="descname">get_model_class</code><span class="sig-paren">(</span><em>field_names</em>, <em>fields</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aioorm/utils/csv_utils/csv_loader.html#Loader.get_model_class"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aioorm.utils.csv_utils.csv_loader.Loader.get_model_class" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aioorm.utils.csv_utils.csv_loader.Loader.load">
+<code class="descname">load</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aioorm/utils/csv_utils/csv_loader.html#Loader.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aioorm.utils.csv_utils.csv_loader.Loader.load" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="aioorm.utils.csv_utils.csv_loader.Reader">
+<em class="property">class </em><code class="descclassname">aioorm.utils.csv_utils.csv_loader.</code><code class="descname">Reader</code><span class="sig-paren">(</span><em>fh</em>, <em>delimiter='</em>, <em>'</em>, <em>**kws</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aioorm/utils/csv_utils/csv_loader.html#Reader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aioorm.utils.csv_utils.csv_loader.Reader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="aioorm.utils.csv_utils.csv_loader.RowConverter">
+<em class="property">class </em><code class="descclassname">aioorm.utils.csv_utils.csv_loader.</code><code class="descname">RowConverter</code><span class="sig-paren">(</span><em>database</em>, <em>has_header=True</em>, <em>sample_size=10</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aioorm/utils/csv_utils/csv_loader.html#RowConverter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aioorm.utils.csv_utils.csv_loader.RowConverter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">aioorm.utils.csv_utils.csv_loader._CSVReader</span></code></p>
+<p>Simple introspection utility to convert a CSV file into a list of headers
+and column types.
+:param database: a peewee Database object.
+:param bool has_header: whether the first row of CSV is a header row.
+:param int sample_size: number of rows to introspect</p>
+<dl class="method">
+<dt id="aioorm.utils.csv_utils.csv_loader.RowConverter.analyze">
+<code class="descname">analyze</code><span class="sig-paren">(</span><em>rows</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aioorm/utils/csv_utils/csv_loader.html#RowConverter.analyze"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aioorm.utils.csv_utils.csv_loader.RowConverter.analyze" title="Permalink to this definition">¶</a></dt>
+<dd><p>Analyze the given rows and try to determine the type of value stored.
+:param list rows: A list-of-lists containing one or more rows from a</p>
+<blockquote>
+<div>csv file.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of peewee Field objects for each column in the CSV.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="aioorm.utils.csv_utils.csv_loader.RowConverter.date_formats">
+<code class="descname">date_formats</code><em class="property"> = ['%Y-%m-%d', '%m/%d/%Y']</em><a class="headerlink" href="#aioorm.utils.csv_utils.csv_loader.RowConverter.date_formats" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="aioorm.utils.csv_utils.csv_loader.RowConverter.datetime_formats">
+<code class="descname">datetime_formats</code><em class="property"> = ['%Y-%m-%d %H:%M:%S', '%Y-%m-%d %H:%M:%S.%f']</em><a class="headerlink" href="#aioorm.utils.csv_utils.csv_loader.RowConverter.datetime_formats" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aioorm.utils.csv_utils.csv_loader.RowConverter.default">
+<code class="descname">default</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aioorm/utils/csv_utils/csv_loader.html#RowConverter.default"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aioorm.utils.csv_utils.csv_loader.RowConverter.default" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aioorm.utils.csv_utils.csv_loader.RowConverter.extract_rows">
+<code class="descname">extract_rows</code><span class="sig-paren">(</span><em>file_or_name</em>, <em>**reader_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aioorm/utils/csv_utils/csv_loader.html#RowConverter.extract_rows"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aioorm.utils.csv_utils.csv_loader.RowConverter.extract_rows" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract <cite>self.sample_size</cite> rows from the CSV file and analyze their
+data-types.
+:param str file_or_name: A string filename or a file handle.
+:param reader_kwargs: Arbitrary parameters to pass to the CSV reader.
+:returns: A 2-tuple containing a list of headers and list of rows</p>
+<blockquote>
+<div>read from the CSV file.</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="aioorm.utils.csv_utils.csv_loader.RowConverter.get_checks">
+<code class="descname">get_checks</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aioorm/utils/csv_utils/csv_loader.html#RowConverter.get_checks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aioorm.utils.csv_utils.csv_loader.RowConverter.get_checks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of functions to use when testing values.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="aioorm.utils.csv_utils.csv_loader.RowConverter.is_date">
+<code class="descname">is_date</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aioorm/utils/csv_utils/csv_loader.html#RowConverter.is_date"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aioorm.utils.csv_utils.csv_loader.RowConverter.is_date" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aioorm.utils.csv_utils.csv_loader.RowConverter.is_datetime">
+<code class="descname">is_datetime</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aioorm/utils/csv_utils/csv_loader.html#RowConverter.is_datetime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aioorm.utils.csv_utils.csv_loader.RowConverter.is_datetime" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aioorm.utils.csv_utils.csv_loader.RowConverter.is_float">
+<code class="descname">is_float</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aioorm/utils/csv_utils/csv_loader.html#RowConverter.is_float"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aioorm.utils.csv_utils.csv_loader.RowConverter.is_float" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aioorm.utils.csv_utils.csv_loader.RowConverter.is_integer">
+<code class="descname">is_integer</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aioorm/utils/csv_utils/csv_loader.html#RowConverter.is_integer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aioorm.utils.csv_utils.csv_loader.RowConverter.is_integer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aioorm.utils.csv_utils.csv_loader.RowConverter.matches_date">
+<code class="descname">matches_date</code><span class="sig-paren">(</span><em>value</em>, <em>formats</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aioorm/utils/csv_utils/csv_loader.html#RowConverter.matches_date"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aioorm.utils.csv_utils.csv_loader.RowConverter.matches_date" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="aioorm.utils.csv_utils.csv_loader.aioload_csv">
+<code class="descclassname">aioorm.utils.csv_utils.csv_loader.</code><code class="descname">aioload_csv</code><span class="sig-paren">(</span><em>db_or_model</em>, <em>file_or_name</em>, <em>fields=None</em>, <em>field_names=None</em>, <em>has_header=True</em>, <em>sample_size=10</em>, <em>converter=None</em>, <em>db_table=None</em>, <em>pk_in_csv=False</em>, <em>**reader_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aioorm/utils/csv_utils/csv_loader.html#aioload_csv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aioorm.utils.csv_utils.csv_loader.aioload_csv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load the contents of a CSV file into a database and return a model class
+suitable for working with the CSV data.
+:param db_or_model: a peewee Database instance or a Model class.
+:param file_or_name: the filename of the CSV file <em>or</em> a file handle.
+:param list fields: A list of peewee Field() instances appropriate to</p>
+<blockquote>
+<div>the values in the CSV file.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>field_names</strong> (<em>list</em>) – A list of names to use for the fields.</li>
+<li><strong>has_header</strong> (<em>bool</em>) – Whether the first row of the CSV file is a header.</li>
+<li><strong>sample_size</strong> (<em>int</em>) – Number of rows to introspect if fields are not
+defined.</li>
+<li><strong>converter</strong> – A RowConverter instance to use.</li>
+<li><strong>db_table</strong> (<em>str</em>) – Name of table to store data in (if not specified, the
+table name will be derived from the CSV filename).</li>
+<li><strong>reader_kwargs</strong> – Arbitrary arguments to pass to the CSV reader.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="aioorm.utils.csv_utils.csv_loader.convert_field">
+<code class="descclassname">aioorm.utils.csv_utils.csv_loader.</code><code class="descname">convert_field</code><span class="sig-paren">(</span><em>field_class</em>, <em>**field_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aioorm/utils/csv_utils/csv_loader.html#convert_field"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aioorm.utils.csv_utils.csv_loader.convert_field" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-aioorm.utils.csv_utils">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-aioorm.utils.csv_utils" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">aioorm.utils.csv_utils package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-aioorm.utils.csv_utils.csv_dump">aioorm.utils.csv_utils.csv_dump module</a></li>
+<li><a class="reference internal" href="#module-aioorm.utils.csv_utils.csv_loader">aioorm.utils.csv_utils.csv_loader module</a></li>
+<li><a class="reference internal" href="#module-aioorm.utils.csv_utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/aioorm.utils.csv_utils.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, hsz.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/aioorm.utils.csv_utils.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

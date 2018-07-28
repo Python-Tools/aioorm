@@ -1,0 +1,162 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>aioorm.fields package &#8212; aioorm  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="aioorm-fields-package">
+<h1>aioorm.fields package<a class="headerlink" href="#aioorm-fields-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-aioorm.fields.many_to_many_fields">
+<span id="aioorm-fields-many-to-many-fields-module"></span><h2>aioorm.fields.many_to_many_fields module<a class="headerlink" href="#module-aioorm.fields.many_to_many_fields" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="aioorm.fields.many_to_many_fields.AioManyToManyField">
+<em class="property">class </em><code class="descclassname">aioorm.fields.many_to_many_fields.</code><code class="descname">AioManyToManyField</code><span class="sig-paren">(</span><em>rel_model</em>, <em>related_name=None</em>, <em>through_model=None</em>, <em>_is_backref=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aioorm/fields/many_to_many_fields.html#AioManyToManyField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aioorm.fields.many_to_many_fields.AioManyToManyField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">playhouse.fields.ManyToManyField</span></code></p>
+<dl class="method">
+<dt id="aioorm.fields.many_to_many_fields.AioManyToManyField.add_to_class">
+<code class="descname">add_to_class</code><span class="sig-paren">(</span><em>model_class</em>, <em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aioorm/fields/many_to_many_fields.html#AioManyToManyField.add_to_class"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aioorm.fields.many_to_many_fields.AioManyToManyField.add_to_class" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aioorm.fields.many_to_many_fields.AioManyToManyField.get_through_model">
+<code class="descname">get_through_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aioorm/fields/many_to_many_fields.html#AioManyToManyField.get_through_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aioorm.fields.many_to_many_fields.AioManyToManyField.get_through_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="aioorm.fields.many_to_many_fields.AioManyToManyFieldDescriptor">
+<em class="property">class </em><code class="descclassname">aioorm.fields.many_to_many_fields.</code><code class="descname">AioManyToManyFieldDescriptor</code><span class="sig-paren">(</span><em>field</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aioorm/fields/many_to_many_fields.html#AioManyToManyFieldDescriptor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aioorm.fields.many_to_many_fields.AioManyToManyFieldDescriptor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">playhouse.fields.ManyToManyFieldDescriptor</span></code></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="aioorm.fields.many_to_many_fields.AioManyToManyQuery">
+<em class="property">class </em><code class="descclassname">aioorm.fields.many_to_many_fields.</code><code class="descname">AioManyToManyQuery</code><span class="sig-paren">(</span><em>instance</em>, <em>field_descriptor</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aioorm/fields/many_to_many_fields.html#AioManyToManyQuery"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aioorm.fields.many_to_many_fields.AioManyToManyQuery" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">aioorm.query.AioSelectQuery</span></code>, <code class="xref py py-class docutils literal"><span class="pre">playhouse.fields.ManyToManyQuery</span></code></p>
+<dl class="method">
+<dt id="aioorm.fields.many_to_many_fields.AioManyToManyQuery.add">
+<code class="descname">add</code><span class="sig-paren">(</span><em>value</em>, <em>clear_existing=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aioorm/fields/many_to_many_fields.html#AioManyToManyQuery.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aioorm.fields.many_to_many_fields.AioManyToManyQuery.add" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aioorm.fields.many_to_many_fields.AioManyToManyQuery.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aioorm/fields/many_to_many_fields.html#AioManyToManyQuery.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aioorm.fields.many_to_many_fields.AioManyToManyQuery.clear" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aioorm.fields.many_to_many_fields.AioManyToManyQuery.remove">
+<code class="descname">remove</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aioorm/fields/many_to_many_fields.html#AioManyToManyQuery.remove"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aioorm.fields.many_to_many_fields.AioManyToManyQuery.remove" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aioorm.fields.many_to_many_fields.AioManyToManyQuery.set">
+<code class="descname">set</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aioorm/fields/many_to_many_fields.html#AioManyToManyQuery.set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aioorm.fields.many_to_many_fields.AioManyToManyQuery.set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-aioorm.fields">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-aioorm.fields" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">aioorm.fields package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-aioorm.fields.many_to_many_fields">aioorm.fields.many_to_many_fields module</a></li>
+<li><a class="reference internal" href="#module-aioorm.fields">Module contents</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/aioorm.fields.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, hsz.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/aioorm.fields.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

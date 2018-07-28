@@ -2,11 +2,13 @@
 aioorm
 ===============================
 
-* version: 0.1.2
+* version: 0.1.3
 
 * status: dev
 
 * author: hsz
+
+* email: hsz1273327@gmail.com
 
 * email: hsz1273327@gmail.com
 
@@ -52,3 +54,14 @@ Limitations
 -----------
 * limit
 
+<<<<<<< HEAD
+=======
+
+Bug fix
+-------------
+* fixed `get` and `get_or_create` 's bug
+
+.. _peewee: http://docs.peewee-orm.com/en/latest/
+.. _torpeewee: https://github.com/snower/torpeewee
+.. _aiopeewee: https://github.com/kszucs/aiopeewee
+>>>>>>> master

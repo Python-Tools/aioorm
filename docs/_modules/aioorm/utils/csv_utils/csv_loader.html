@@ -1,0 +1,427 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>aioorm.utils.csv_utils.csv_loader &#8212; aioorm  documentation</title>
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for aioorm.utils.csv_utils.csv_loader</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">aiofiles</span>
+<span class="kn">from</span> <span class="nn">io</span> <span class="k">import</span> <span class="n">StringIO</span>
+<span class="kn">from</span> <span class="nn">peewee</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">peewee</span> <span class="k">import</span> <span class="n">Database</span>
+<span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">import</span> <span class="nn">_csv</span>
+<div class="viewcode-block" id="Reader"><a class="viewcode-back" href="../../../../aioorm.utils.csv_utils.html#aioorm.utils.csv_utils.csv_loader.Reader">[docs]</a><span class="k">class</span> <span class="nc">Reader</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">fh</span><span class="p">,</span><span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span><span class="o">**</span><span class="n">kws</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fh</span> <span class="o">=</span> <span class="n">fh</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">delimiter</span> <span class="o">=</span> <span class="n">delimiter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kws</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="o">**</span><span class="n">kws</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__aiter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">__anext__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">fh</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">line</span><span class="p">:</span>
+            <span class="n">row</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">delimiter</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">row</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">StopAsyncIteration</span></div>
+
+
+<div class="viewcode-block" id="Get_Reader"><a class="viewcode-back" href="../../../../aioorm.utils.csv_utils.html#aioorm.utils.csv_utils.csv_loader.Get_Reader">[docs]</a><span class="k">class</span> <span class="nc">Get_Reader</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_or_name</span><span class="p">,</span> <span class="o">**</span><span class="n">reader_kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_or_name</span><span class="o">=</span><span class="n">file_or_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reader_kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="o">**</span><span class="n">reader_kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_file</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_io</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">__aenter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file_or_name</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fh</span> <span class="o">=</span> <span class="k">await</span> <span class="n">aiofiles</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file_or_name</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file_or_name</span><span class="p">,</span> <span class="n">StringIO</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fh</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_or_name</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fh</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">is_io</span><span class="o">=</span><span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fh</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_or_name</span>
+            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">fh</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">is_file</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_io</span><span class="p">:</span>
+            <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fh</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">reader_kwargs</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">reader</span> <span class="o">=</span> <span class="n">Reader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fh</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">reader_kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">reader</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">__aexit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc_type</span><span class="p">,</span> <span class="n">exc</span><span class="p">,</span> <span class="n">tb</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_file</span><span class="p">:</span>
+            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">fh</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_io</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fh</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+<span class="k">class</span> <span class="nc">_CSVReader</span><span class="p">():</span>
+
+    <span class="k">def</span> <span class="nf">get_reader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_or_name</span><span class="p">,</span> <span class="o">**</span><span class="n">reader_kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Get_Reader</span><span class="p">(</span><span class="n">file_or_name</span><span class="p">,</span> <span class="o">**</span><span class="n">reader_kwargs</span><span class="p">)</span>
+
+<div class="viewcode-block" id="convert_field"><a class="viewcode-back" href="../../../../aioorm.utils.csv_utils.html#aioorm.utils.csv_utils.csv_loader.convert_field">[docs]</a><span class="k">def</span> <span class="nf">convert_field</span><span class="p">(</span><span class="n">field_class</span><span class="p">,</span> <span class="o">**</span><span class="n">field_kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">fn</span><span class="p">):</span>
+        <span class="n">fn</span><span class="o">.</span><span class="n">field</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">field_class</span><span class="p">(</span><span class="o">**</span><span class="n">field_kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">fn</span>
+    <span class="k">return</span> <span class="n">decorator</span></div>
+
+<div class="viewcode-block" id="RowConverter"><a class="viewcode-back" href="../../../../aioorm.utils.csv_utils.html#aioorm.utils.csv_utils.csv_loader.RowConverter">[docs]</a><span class="k">class</span> <span class="nc">RowConverter</span><span class="p">(</span><span class="n">_CSVReader</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Simple introspection utility to convert a CSV file into a list of headers</span>
+<span class="sd">    and column types.</span>
+<span class="sd">    :param database: a peewee Database object.</span>
+<span class="sd">    :param bool has_header: whether the first row of CSV is a header row.</span>
+<span class="sd">    :param int sample_size: number of rows to introspect</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">date_formats</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;%m/</span><span class="si">%d</span><span class="s1">/%Y&#39;</span><span class="p">]</span>
+
+    <span class="n">datetime_formats</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S.</span><span class="si">%f</span><span class="s1">&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">database</span><span class="p">,</span> <span class="n">has_header</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sample_size</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">has_header</span> <span class="o">=</span> <span class="n">has_header</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sample_size</span> <span class="o">=</span> <span class="n">sample_size</span>
+
+<div class="viewcode-block" id="RowConverter.matches_date"><a class="viewcode-back" href="../../../../aioorm.utils.csv_utils.html#aioorm.utils.csv_utils.csv_loader.RowConverter.matches_date">[docs]</a>    <span class="k">def</span> <span class="nf">matches_date</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">formats</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">fmt</span> <span class="ow">in</span> <span class="n">formats</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">fmt</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="RowConverter.is_integer"><a class="viewcode-back" href="../../../../aioorm.utils.csv_utils.html#aioorm.utils.csv_utils.csv_loader.RowConverter.is_integer">[docs]</a>    <span class="nd">@convert_field</span><span class="p">(</span><span class="n">IntegerField</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">is_integer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">value</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="RowConverter.is_float"><a class="viewcode-back" href="../../../../aioorm.utils.csv_utils.html#aioorm.utils.csv_utils.csv_loader.RowConverter.is_float">[docs]</a>    <span class="nd">@convert_field</span><span class="p">(</span><span class="n">FloatField</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">is_float</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+            <span class="k">pass</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="RowConverter.is_datetime"><a class="viewcode-back" href="../../../../aioorm.utils.csv_utils.html#aioorm.utils.csv_utils.csv_loader.RowConverter.is_datetime">[docs]</a>    <span class="nd">@convert_field</span><span class="p">(</span><span class="n">DateTimeField</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">is_datetime</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">matches_date</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">datetime_formats</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RowConverter.is_date"><a class="viewcode-back" href="../../../../aioorm.utils.csv_utils.html#aioorm.utils.csv_utils.csv_loader.RowConverter.is_date">[docs]</a>    <span class="nd">@convert_field</span><span class="p">(</span><span class="n">DateField</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">is_date</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">matches_date</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">date_formats</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RowConverter.default"><a class="viewcode-back" href="../../../../aioorm.utils.csv_utils.html#aioorm.utils.csv_utils.csv_loader.RowConverter.default">[docs]</a>    <span class="nd">@convert_field</span><span class="p">(</span><span class="n">BareField</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="RowConverter.extract_rows"><a class="viewcode-back" href="../../../../aioorm.utils.csv_utils.html#aioorm.utils.csv_utils.csv_loader.RowConverter.extract_rows">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">extract_rows</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_or_name</span><span class="p">,</span> <span class="o">**</span><span class="n">reader_kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Extract `self.sample_size` rows from the CSV file and analyze their</span>
+<span class="sd">        data-types.</span>
+<span class="sd">        :param str file_or_name: A string filename or a file handle.</span>
+<span class="sd">        :param reader_kwargs: Arbitrary parameters to pass to the CSV reader.</span>
+<span class="sd">        :returns: A 2-tuple containing a list of headers and list of rows</span>
+<span class="sd">                  read from the CSV file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">rows_to_read</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sample_size</span>
+        <span class="k">async</span> <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_reader</span><span class="p">(</span><span class="n">file_or_name</span><span class="p">,</span> <span class="o">**</span><span class="n">reader_kwargs</span><span class="p">)</span> <span class="k">as</span> <span class="n">reader</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_header</span><span class="p">:</span>
+                <span class="n">rows_to_read</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sample_size</span><span class="p">):</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">row</span> <span class="o">=</span> <span class="k">await</span> <span class="n">reader</span><span class="o">.</span><span class="fm">__anext__</span><span class="p">()</span>
+                <span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">te</span><span class="p">:</span>
+                    <span class="n">row</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="k">raise</span>
+                <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_header</span><span class="p">:</span>
+            <span class="n">header</span><span class="p">,</span> <span class="n">rows</span> <span class="o">=</span> <span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">rows</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">header</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;field_</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">]))]</span>
+        <span class="k">return</span> <span class="n">header</span><span class="p">,</span> <span class="n">rows</span></div>
+
+<div class="viewcode-block" id="RowConverter.get_checks"><a class="viewcode-back" href="../../../../aioorm.utils.csv_utils.html#aioorm.utils.csv_utils.csv_loader.RowConverter.get_checks">[docs]</a>    <span class="k">def</span> <span class="nf">get_checks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a list of functions to use when testing values.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">is_date</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">is_datetime</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">is_integer</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">is_float</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">default</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="RowConverter.analyze"><a class="viewcode-back" href="../../../../aioorm.utils.csv_utils.html#aioorm.utils.csv_utils.csv_loader.RowConverter.analyze">[docs]</a>    <span class="k">def</span> <span class="nf">analyze</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rows</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Analyze the given rows and try to determine the type of value stored.</span>
+<span class="sd">        :param list rows: A list-of-lists containing one or more rows from a</span>
+<span class="sd">                          csv file.</span>
+<span class="sd">        :returns: A list of peewee Field objects for each column in the CSV.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">transposed</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">rows</span><span class="p">)</span>
+        <span class="n">checks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_checks</span><span class="p">()</span>
+        <span class="n">column_types</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">column</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">transposed</span><span class="p">):</span>
+            <span class="c1"># Remove any empty values.</span>
+            <span class="n">col_vals</span> <span class="o">=</span> <span class="p">[</span><span class="n">val</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">column</span> <span class="k">if</span> <span class="n">val</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">check</span> <span class="ow">in</span> <span class="n">checks</span><span class="p">:</span>
+                <span class="n">results</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">check</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">col_vals</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">results</span><span class="p">):</span>
+                    <span class="n">column_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">check</span><span class="o">.</span><span class="n">field</span><span class="p">())</span>
+                    <span class="k">break</span>
+
+        <span class="k">return</span> <span class="n">column_types</span></div></div>
+
+
+<div class="viewcode-block" id="Loader"><a class="viewcode-back" href="../../../../aioorm.utils.csv_utils.html#aioorm.utils.csv_utils.csv_loader.Loader">[docs]</a><span class="k">class</span> <span class="nc">Loader</span><span class="p">(</span><span class="n">_CSVReader</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Load the contents of a CSV file into a database and return a model class</span>
+<span class="sd">    suitable for working with the CSV data.</span>
+<span class="sd">    :param db_or_model: a peewee Database instance or a Model class.</span>
+<span class="sd">    :param file_or_name: the filename of the CSV file *or* a file handle.</span>
+<span class="sd">    :param list fields: A list of peewee Field() instances appropriate to</span>
+<span class="sd">        the values in the CSV file.</span>
+<span class="sd">    :param list field_names: A list of names to use for the fields.</span>
+<span class="sd">    :param bool has_header: Whether the first row of the CSV file is a header.</span>
+<span class="sd">    :param int sample_size: Number of rows to introspect if fields are not</span>
+<span class="sd">        defined.</span>
+<span class="sd">    :param converter: A RowConverter instance to use.</span>
+<span class="sd">    :param str db_table: Name of table to store data in (if not specified, the</span>
+<span class="sd">        table name will be derived from the CSV filename).</span>
+<span class="sd">    :param reader_kwargs: Arbitrary arguments to pass to the CSV reader.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_or_model</span><span class="p">,</span> <span class="n">file_or_name</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">field_names</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">has_header</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sample_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                 <span class="n">converter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">db_table</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pk_in_csv</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="o">**</span><span class="n">reader_kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_or_name</span> <span class="o">=</span> <span class="n">file_or_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span> <span class="o">=</span> <span class="n">fields</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">field_names</span> <span class="o">=</span> <span class="n">field_names</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">has_header</span> <span class="o">=</span> <span class="n">has_header</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sample_size</span> <span class="o">=</span> <span class="n">sample_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">converter</span> <span class="o">=</span> <span class="n">converter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reader_kwargs</span> <span class="o">=</span> <span class="n">reader_kwargs</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">file_or_name</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">file_or_name</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">file_or_name</span><span class="p">,</span> <span class="n">StringIO</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;data.csv&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">file_or_name</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">name</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">db_or_model</span><span class="p">,</span> <span class="n">Database</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">database</span> <span class="o">=</span> <span class="n">db_or_model</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">db_table</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">db_table</span> <span class="ow">or</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">))[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">db_or_model</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">database</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">database</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">db_table</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">db_table</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fields</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">sorted_fields</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">field_names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">sorted_field_names</span>
+            <span class="c1"># If using an auto-incrementing primary key, ignore it unless we</span>
+            <span class="c1"># are told the primary key is included in the CSV.</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">auto_increment</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">pk_in_csv</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">fields</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">field_names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">field_names</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+<div class="viewcode-block" id="Loader.clean_field_name"><a class="viewcode-back" href="../../../../aioorm.utils.csv_utils.html#aioorm.utils.csv_utils.csv_loader.Loader.clean_field_name">[docs]</a>    <span class="k">def</span> <span class="nf">clean_field_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;[^a-z0-9]+&#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="Loader.get_converter"><a class="viewcode-back" href="../../../../aioorm.utils.csv_utils.html#aioorm.utils.csv_utils.csv_loader.Loader.get_converter">[docs]</a>    <span class="k">def</span> <span class="nf">get_converter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">converter</span> <span class="ow">or</span> <span class="n">RowConverter</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="p">,</span>
+            <span class="n">has_header</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">has_header</span><span class="p">,</span>
+            <span class="n">sample_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sample_size</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Loader.analyze_csv"><a class="viewcode-back" href="../../../../aioorm.utils.csv_utils.html#aioorm.utils.csv_utils.csv_loader.Loader.analyze_csv">[docs]</a>    <span class="k">def</span> <span class="nf">analyze_csv</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">converter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_converter</span><span class="p">()</span>
+        <span class="n">header</span><span class="p">,</span> <span class="n">rows</span> <span class="o">=</span> <span class="n">converter</span><span class="o">.</span><span class="n">extract_rows</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">file_or_name</span><span class="p">,</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">reader_kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">rows</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fields</span> <span class="o">=</span> <span class="n">converter</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="n">converter</span><span class="o">.</span><span class="n">default</span><span class="o">.</span><span class="n">field</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">header</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">field_names</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">field_names</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">clean_field_name</span><span class="p">(</span><span class="n">col</span><span class="p">)</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span>  <span class="n">header</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Loader.get_model_class"><a class="viewcode-back" href="../../../../aioorm.utils.csv_utils.html#aioorm.utils.csv_utils.csv_loader.Loader.get_model_class">[docs]</a>    <span class="k">def</span> <span class="nf">get_model_class</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_names</span><span class="p">,</span> <span class="n">fields</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span>
+        <span class="n">attrs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">field_names</span><span class="p">,</span> <span class="n">fields</span><span class="p">))</span>
+        <span class="k">if</span> <span class="s1">&#39;id&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">attrs</span><span class="p">:</span>
+            <span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;_auto_pk&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">PrimaryKeyField</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span> <span class="n">IntegerField</span><span class="p">):</span>
+            <span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">PrimaryKeyField</span><span class="p">()</span>
+        <span class="n">klass</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db_table</span><span class="o">.</span><span class="n">title</span><span class="p">(),</span> <span class="p">(</span><span class="n">Model</span><span class="p">,),</span> <span class="n">attrs</span><span class="p">)</span>
+        <span class="n">klass</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">database</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span>
+        <span class="n">klass</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">db_table</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db_table</span>
+        <span class="k">return</span> <span class="n">klass</span></div>
+
+<div class="viewcode-block" id="Loader.load"><a class="viewcode-back" href="../../../../aioorm.utils.csv_utils.html#aioorm.utils.csv_utils.csv_loader.Loader.load">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">analyze_csv</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">field_names</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_header</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">field_names</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="s1">&#39;field_</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">))]</span>
+
+        <span class="c1">#reader_obj = self.get_reader(self.file_or_name, **self.reader_kwargs)</span>
+        <span class="k">async</span> <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_reader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file_or_name</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">reader_kwargs</span><span class="p">)</span> <span class="k">as</span> <span class="n">reader</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">field_names</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">row</span> <span class="o">=</span> <span class="k">await</span> <span class="n">reader</span><span class="o">.</span><span class="fm">__anext__</span><span class="p">()</span>
+                <span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">te</span><span class="p">:</span>
+                    <span class="n">row</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="k">raise</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">field_names</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">clean_field_name</span><span class="p">(</span><span class="n">col</span><span class="p">)</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">row</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_header</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">row</span> <span class="o">=</span> <span class="k">await</span> <span class="n">reader</span><span class="o">.</span><span class="fm">__anext__</span><span class="p">()</span>
+                <span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">te</span><span class="p">:</span>
+                    <span class="n">row</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="k">raise</span>
+
+
+            <span class="n">ModelClass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_model_class</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">field_names</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">)</span>
+
+            <span class="c1">#with self.database.transaction():</span>
+            <span class="k">await</span> <span class="n">ModelClass</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">inserts</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">reader</span><span class="p">,</span><span class="n">Reader</span><span class="p">):</span>
+                <span class="k">async</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">row</span><span class="p">:</span>
+                        <span class="k">continue</span>
+                    <span class="n">insert</span> <span class="o">=</span> <span class="p">{}</span>
+                    <span class="k">for</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">field_names</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
+                        <span class="k">if</span> <span class="n">value</span><span class="p">:</span>
+                            <span class="n">insert</span><span class="p">[</span><span class="n">field_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+                    <span class="k">if</span> <span class="n">insert</span><span class="p">:</span>
+                        <span class="n">inserts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">insert</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">row</span><span class="p">:</span>
+                        <span class="k">continue</span>
+                    <span class="n">insert</span> <span class="o">=</span> <span class="p">{}</span>
+                    <span class="k">for</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">field_names</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
+                        <span class="k">if</span> <span class="n">value</span><span class="p">:</span>
+                            <span class="n">insert</span><span class="p">[</span><span class="n">field_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+                    <span class="k">if</span> <span class="n">insert</span><span class="p">:</span>
+                        <span class="n">inserts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">insert</span><span class="p">)</span>
+            <span class="k">await</span> <span class="n">ModelClass</span><span class="o">.</span><span class="n">insert_many</span><span class="p">(</span><span class="n">inserts</span><span class="p">)</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">ModelClass</span></div></div>
+
+<div class="viewcode-block" id="aioload_csv"><a class="viewcode-back" href="../../../../aioorm.utils.csv_utils.html#aioorm.utils.csv_utils.csv_loader.aioload_csv">[docs]</a><span class="k">async</span> <span class="k">def</span> <span class="nf">aioload_csv</span><span class="p">(</span><span class="n">db_or_model</span><span class="p">,</span> <span class="n">file_or_name</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">field_names</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+             <span class="n">has_header</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sample_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">converter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+             <span class="n">db_table</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pk_in_csv</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">reader_kwargs</span><span class="p">):</span>
+    <span class="n">loader</span> <span class="o">=</span> <span class="n">Loader</span><span class="p">(</span>
+        <span class="n">db_or_model</span><span class="o">=</span><span class="n">db_or_model</span><span class="p">,</span>
+        <span class="n">file_or_name</span><span class="o">=</span><span class="n">file_or_name</span><span class="p">,</span>
+        <span class="n">fields</span><span class="o">=</span><span class="n">fields</span><span class="p">,</span>
+        <span class="n">field_names</span><span class="o">=</span><span class="n">field_names</span><span class="p">,</span>
+        <span class="n">has_header</span><span class="o">=</span><span class="n">has_header</span><span class="p">,</span>
+        <span class="n">sample_size</span><span class="o">=</span><span class="n">sample_size</span><span class="p">,</span>
+        <span class="n">converter</span><span class="o">=</span><span class="n">converter</span><span class="p">,</span>
+        <span class="n">db_table</span><span class="o">=</span><span class="n">db_table</span><span class="p">,</span>
+        <span class="n">pk_in_csv</span><span class="o">=</span><span class="n">pk_in_csv</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">reader_kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="k">await</span> <span class="n">loader</span><span class="o">.</span><span class="n">load</span><span class="p">()</span></div>
+
+<span class="n">aioload_csv</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">Loader</span><span class="o">.</span><span class="vm">__doc__</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, hsz.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
