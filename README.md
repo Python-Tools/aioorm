@@ -1,6 +1,6 @@
 # aioorm
 
-+ version: 0.1.5
++ version: 0.1.6
 + status: production
 + author: hsz
 + email: hsz1273327@gmail.com
