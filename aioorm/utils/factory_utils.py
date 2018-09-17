@@ -20,5 +20,4 @@ def AioDbFactory(uri:str)->AnyDb:
         port=info.get("port"),
         user=info.get("username"),
         password=info.get("password"))
-    print(db)
     return db
